@@ -11,10 +11,34 @@ examples:
 		SERV_SERVO=`echo "$$tg" | cut -f 2 -d ','`;					\
 		SERV_NAME=`echo "$$tg" | sed -e 's/^[0-9]*,[0-9]*,//' | sed -e 's/,/-/g'`;	\
 		echo "$$SERV_BRAND + $$SERV_SERVO => $$SERV_NAME";\
-		openscad -D _servo_id_brand=$$SERV_BRAND 	\
-			-D _servo_id_servo=$$SERV_SERVO		\
-			-q					\
-			-o stl_examples/frame-$$SERV_NAME.stl		\
-			servo-frame.scad;			\
+		openscad -D _servo_id_brand=$$SERV_BRAND 		\
+			-D _servo_id_servo=$$SERV_SERVO			\
+			-D with_bearing=3				\
+			-o stl_examples/frame-$$SERV_NAME.echo		\
+			servo-frame.scad;				\
+		openscad -D _servo_id_brand=$$SERV_BRAND 		\
+			-D _servo_id_servo=$$SERV_SERVO			\
+			-D with_bearing=3				\
+			-q						\
+			-o stl_examples/frame-$$SERV_NAME-all.stl	\
+			servo-frame.scad;				\
+		openscad -D _servo_id_brand=$$SERV_BRAND 		\
+			-D _servo_id_servo=$$SERV_SERVO			\
+			-D with_bearing=1				\
+			-q						\
+			-o stl_examples/frame-$$SERV_NAME-r-bearing.stl	\
+			servo-frame.scad;				\
+		openscad -D _servo_id_brand=$$SERV_BRAND 		\
+			-D _servo_id_servo=$$SERV_SERVO			\
+			-D with_bearing=2				\
+			-q						\
+			-o stl_examples/frame-$$SERV_NAME-l-bearing.stl	\
+			servo-frame.scad;				\
+		openscad -D _servo_id_brand=$$SERV_BRAND 		\
+			-D _servo_id_servo=$$SERV_SERVO			\
+			-D with_bearing=0				\
+			-q						\
+			-o stl_examples/frame-$$SERV_NAME-no-bearing.stl \
+			servo-frame.scad;				\
 	 done;
 

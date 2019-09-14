@@ -65,7 +65,7 @@ servos_kb	= [
 /* Servo #0,1    - MKS DS75K                                                     */
  ,[ 1, 16.7,   23,    9,  8.7,  4.8, 3.35,  1.2,    3,    0,    0,    2,    0,  2.5 ]
 /* Servo #0,2    - MKS DS75K-N                                                   */
- ,[ 0, 16.7,   23,    9,  8.7,  4.8, 3.35,  1.2,    3,    0,    0,    2,    0,  2.5 ]
+ ,[ 0, 16.7,   23,    9,    9,  4.8, 3.35,    0,    0,    0,    0,    0,    0,  2.5 ]
 /* Servo #0,3    - MKS HV6130                                                    */
  ,[ 2, 29.5,   30,   10, 19.8,  6.5,  2.8,    2,    6,    8,    0,    3,    2,  2.5 ] 
 ]
@@ -184,7 +184,7 @@ frame_thickness		= 1.5; 	/* thickness of the frame */
 
 frame_extra_width	= 3.0; 	/* extra width of the frame */
 
-frame_arm_clearance	= 2;    /* clearance between the servo arm top
+frame_arm_clearance	= 3;    /* clearance between the servo arm top
 				 * and the start of the servo frame top
 				 * (aka bearing support if 'with_bearing').
 				 *
@@ -239,9 +239,9 @@ s_h_ear			= servo[4]	+ 0.1;
 s_w_gear		= servo[5];
 s_gear_h		= servo[6];
 
-s_ear_t			= servo[7]	+ 0.1;
+s_ear_t			= (legformat)?servo[7]	+ 0.1 : 0;
 
-s_ear_w			= servo[8]	+ 0.2;
+s_ear_w			= (legformat)?servo[8]	+ 0.2 : 3;
 s_ear_h			= (servo[9]?servo[9]:servo[8]) + 0.2;
 s_ear_h_third		= (servo[10]?servo[10] + 0.2 : s_ear_h);
 s_ear_isnotch		= (servo[11]<0) ? 1 : 0;
@@ -257,7 +257,7 @@ frame_gear_clearance	= frame_arm_clearance + arm_thickness;
 frame_body_clearance	= frame_gear_clearance + s_gear_h;
 
 module servo_ear_solid( masky=0, issupport=0 ) {
-	if (legformat == 1) {
+	if (legformat <= 1) {
 		/* ears */
 		translate([ 0, s_h_ear - s_h/2 + s_ear_t/2, 0]) {
 			cube([s_w+s_ear_w*2,s_ear_t, s_t], center=true);
@@ -272,7 +272,7 @@ module servo_ear_solid( masky=0, issupport=0 ) {
 						}
 						translate([0,-s_t/2,0]) cube([s_t,s_t/2,s_w+s_ear_w*2],center=true);
 					}
-					if (ear_support_screw) {
+					if (legformat && ear_support_screw) {
 						translate([s_t/4,-s_t*3/4-s_ear_t/2,0]) {
 							cube([s_t/2,s_t/2,s_w+s_ear_w*2],center=true);
 						}
@@ -284,7 +284,7 @@ module servo_ear_solid( masky=0, issupport=0 ) {
 				}
 			}
 			else {
-				if (ear_support_screw) {
+				if (legformat && ear_support_screw) {
 					translate([0,-s_t/4-s_ear_t/2,0])
 						cube([s_w+s_ear_w*2,s_t/2, s_t], center=true);
 					translate([0,-s_t*3/4-s_ear_t/2,0]) {
@@ -620,13 +620,15 @@ module bearing_shaft_solid() {
 }
 
 module bearing_lock_solid() {
-	translate([s_w/2, s_t+s_h/2+frame_body_clearance+frame_extra_width, -s_t/2])
-	rotate([90,0,0])
-		translate([-frame_body_clearance,-b_t/2-frame_body_clearance-s_h/2,-s_t/2])
-		intersection() {
-			servo_bearing_holder_wscrew(1);
-			servo_bearing_holder(0,1);
-		}
+	if (with_bearing) {
+		translate([s_w/2, s_t+s_h/2+frame_body_clearance+frame_extra_width, -s_t/2])
+			rotate([90,0,0])
+			translate([-frame_body_clearance,-b_t/2-frame_body_clearance-s_h/2,-s_t/2])
+			intersection() {
+				servo_bearing_holder_wscrew(1);
+				servo_bearing_holder(0,1);
+			}
+	}
 }
 
 module servo_frame() {
