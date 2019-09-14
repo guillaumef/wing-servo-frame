@@ -20,6 +20,9 @@ Documentation is in the Scad file.
 
 Examples of generated STL in 'stl_examples' directory.
 
+**Disclaimer:**
+Work in progress... there is issues with MKS range servo with ears and the Bluebird BMS-207.
+
 **Bearing:**
 If you activate the 'with_bearing' option, you will need:
 
