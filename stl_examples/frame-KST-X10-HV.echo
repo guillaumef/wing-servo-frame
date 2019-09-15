@@ -1,4 +1,8 @@
 ECHO: "******************"
+ECHO: "WARNING: Unable to produce 'ear_support_screw'>0 - not enough space between cable and ear"
+ECHO: "WARNING: Falling back to ear_support_screw=0"
+ECHO: "******************"
+ECHO: "******************"
 ECHO: "Bearing shaft/arm screw:"
 ECHO: "**** the shaft inserted in the bearing is printed"
 ECHO: "**** screw length (threaded part) should be approximately between 15.5 and 17.8 mm"
