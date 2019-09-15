@@ -53,8 +53,7 @@
 
 servo_id	= [ 1 , 0 ];   /* Brand,Servo */
 
-servos_kb	= [
-
+servos_kb	= [ 
 /*
  *        A     B     C     D     E     F     G     H     I     J     K     L     M
  */
@@ -75,7 +74,7 @@ servos_kb	= [
 /* Servo #1,0   - BlueBird BMS-125WV / BMS-126WV / BMS-127WV                     */
   [ 1,   20, 23.3,   10,   15, 5.43,  3.8,  1.3,  4.6,    0,    0,   -2,    0,    3 ]
 /* Servo #1,1   - BlueBird BMS-207WV                                             */
- ,[ 1, 27.5,   23,   12, 20.1,  5.7,  3.8,    2, 4.75,    0,    0,   -2,    8,    3 ]
+ ,[ 1, 27.5,   23,   12, 20.1,  5.7,  3.8,    2, 4.75,    0,    0,   -2,    6,    3 ]
 ]
 
 /* Brand #2 - KST */
@@ -148,13 +147,15 @@ ear_support_screw	= 1;	/* for LEG_FORMAT=1, manage L-shaped block vertically scr
 				 * the servo frame
 				 * Modes:
 				 *
-				 *   0: no y-axis locking - classic for wing bottom skin strap mount
+				 *   0: no z-axis locking - classic for wing bottom skin strap mount
 				 *   1: with a central notch in servo ear
 				 *   2: with screws in servo ear
 				 *   3: 1&2
 				 *
 				 */
 ear_support_screwhead	= 3;	/* with ear_support_screw == 2, diameter of the screw head */
+
+z_axis_servo_cover	= 1;	/* with ear_support_screw == 0, make a servo cover */
 
 
 /* Servo arm properties */
@@ -256,6 +257,28 @@ b_t			= bearing[2] 	+ 0.5;
 frame_gear_clearance	= frame_arm_clearance + arm_thickness;
 frame_body_clearance	= frame_gear_clearance + s_gear_h;
 
+
+/* Checks */
+_check_arm_diff	= (s_h_ear - s_h/2 - s_t) - (-s_h/2 + s_cable_h + 4);
+_check_arm_fail = (ear_support_screw>0 && _check_arm_diff<0 && _check_arm_diff < s_ear_w/-2) ? 1 : 0;
+if (_check_arm_fail) {
+	_SEP();
+	_WARN( "Unable to produce 'ear_support_screw'>0 - not enough space between cable and ear" );
+	_WARN( "Falling back to ear_support_screw=0" );
+	_SEP();
+}
+_ear_support_screw	= (_check_arm_fail)? 0 : ear_support_screw;
+
+
+/* Modules.. */
+module _SEP() { _PRINT("******************"); }
+module _WARN( a="",b="",c="",d="",e="",f="",g="",h="",i="",j="" ) {
+	echo(str("WARNING: ",a,b,c,d,e,f,g,h,i,j));
+}
+module _PRINT( a="",b="",c="",d="",e="",f="",g="",h="",i="",j="" ) {
+	echo(str(a,b,c,d,e,f,g,h,i,j));
+}
+
 module servo_ear_solid( masky=0, issupport=0 ) {
 	if (legformat <= 1) {
 		/* ears */
@@ -266,13 +289,13 @@ module servo_ear_solid( masky=0, issupport=0 ) {
 					translate([0,s_ear_t/2,0])
 					difference() {
 						union(){
-							cylinder(r=s_t/2,h=s_w+s_ear_w*2,center=true);
+							cylinder(r=s_t/2,h=s_w+s_ear_w*2+frame_extra_width,center=true);
 							translate([s_t/4,0,0])
-								cube([s_t/2,s_t,s_w+s_ear_w*2],center=true);
+								cube([s_t/2,s_t,s_w+s_ear_w*2+frame_extra_width],center=true);
 						}
 						translate([0,-s_t/2,0]) cube([s_t,s_t/2,s_w+s_ear_w*2],center=true);
 					}
-					if (legformat && ear_support_screw) {
+					if (legformat && _ear_support_screw) {
 						translate([s_t/4,-s_t*3/4-s_ear_t/2,0]) {
 							cube([s_t/2,s_t/2,s_w+s_ear_w*2],center=true);
 						}
@@ -284,7 +307,7 @@ module servo_ear_solid( masky=0, issupport=0 ) {
 				}
 			}
 			else {
-				if (legformat && ear_support_screw) {
+				if (legformat && _ear_support_screw) {
 					translate([0,-s_t/4-s_ear_t/2,0])
 						cube([s_w+s_ear_w*2,s_t/2, s_t], center=true);
 					translate([0,-s_t*3/4-s_ear_t/2,0]) {
@@ -294,7 +317,7 @@ module servo_ear_solid( masky=0, issupport=0 ) {
 							cylinder(r=0.8,h=200,center=true);
 					}
 
-					if (ear_support_screw > 1) { /* with servo ear screw */ 
+					if (_ear_support_screw > 1) { /* with servo ear screw */ 
 						translate([-s_w/2-s_ear_w/2,s_ear_t/2,0])
 							cylinder(r=ear_support_screwhead/2,h=s_t*2,center=true);
 						translate([s_w/2+s_ear_w/2,s_ear_t/2,0])
@@ -303,29 +326,36 @@ module servo_ear_solid( masky=0, issupport=0 ) {
 				}
 			}
 		}
-		if (issupport) {
-			/* bottom blocker */
-			translate([0,-s_h/2,-s_t/2])
+	}
+	/* All except 3 vertical_ears */
+	if (issupport && legformat<=2) {
+		/* bottom blocker */
+		translate([0,-s_h/2,-s_t/2])
+		{
+			difference()
 			{
-				difference()
-				{
-					rotate([0,90,0])
-						scale([s_t,s_ear_w+frame_extra_width,1])
-						cylinder(r=1,h=s_w,center=true);
-					translate([0,0,-500])
-						cube([1000,1000,1000],center=true);
-					translate([0,500,0])
-						cube([1000,1000,1000],center=true);
-					nb=3;
-					wall=(s_ear_w<4)?2:s_ear_w/2;
-					cell=(s_w-wall*(nb+1))/nb;
-					for(x=[-s_w/2+wall:cell+wall:s_w/2])
+				rotate([0,90,0])
+					scale([s_t,s_ear_w+frame_extra_width,1])
+					cylinder(r=1,h=s_w,center=true);
+				translate([0,0,-500])
+					cube([1000,1000,1000],center=true);
+				translate([0,500,0])
+					cube([1000,1000,1000],center=true);
+				nb=3;
+				wall=(s_ear_w<4)?2:s_ear_w/2;
+				cell=(s_w-wall*(nb+1))/nb;
+				for(x=[-s_w/2+wall:cell+wall:s_w/2])
 					translate([x+cell/2,-s_h/2-wall,0])
 						cube([cell,s_h,1000],center=true);
-				}
+			}
+			/* no z-axis locking - adding a flat surface */
+			if (_ear_support_screw == 0) {
+				translate([0,-s_ear_w/2,s_t/2])
+					cube([s_ear_w*2,s_ear_w,s_t],center=true);
 			}
 		}
 	}
+	/* All vertical_ears */
 	if (legformat > 1) {
 		surround_spacer = 2;
 		translate([ 0, s_h_ear - s_h/2 + s_ear_h/2, masky/2])
@@ -353,8 +383,23 @@ module servo_ear_solid( masky=0, issupport=0 ) {
 	}
 }
 
+module servo_cover() {
+	if (_ear_support_screw == 0 && z_axis_servo_cover) {
+		translate([0,-s_h/2-frame_extra_width-s_ear_w-1,-s_t/2]) {
+			linear_extrude(1)
+				polygon([
+						[-s_w/2-s_ear_w,-s_ear_w*2], [-s_w/2-s_ear_w,0],
+						[s_w/2+s_ear_w,0], [s_w/2+s_ear_w,-s_ear_w*2],
+						[s_ear_w,-s_h_ear-s_ear_w],
+						[-s_ear_w,-s_h_ear-s_ear_w]
+				]);
+
+		}
+	}
+}
+
 module servo_ear_support_screw_solid() {
-	if (legformat == 1 && ear_support_screw) {
+	if (legformat == 1 && _ear_support_screw) {
 		translate([s_w/2, -s_t-s_h/2-s_ear_w-frame_extra_width - 1, -s_t/2]) {
 			difference() {
 				linear_extrude(s_ear_w) polygon([
@@ -375,7 +420,7 @@ module servo_ear_support_screw_solid() {
 						cube([6,4,1000],center=true);
 				}
 			}
-			if (ear_support_screw != 2) {
+			if (_ear_support_screw != 2) {
 				dia = s_ear_hole_dia - .4; /* with minkowski sphere */
 				/* ear hole */
 				difference() {
@@ -384,7 +429,7 @@ module servo_ear_support_screw_solid() {
 						translate([s_t/2,0,s_ear_w/2]) {
 							rotate([90,0,0]) {
 								difference(){
-									cylinder(r=dia/2,h=s_ear_t*2,center=true);
+									cylinder(r=dia/2,h=(s_ear_t-.2)*2,center=true);
 									if (! s_ear_isnotch) {
 										rotate([55,0,0])
 											translate([0,0,500+(s_ear_t+dia)/4])
@@ -395,7 +440,7 @@ module servo_ear_support_screw_solid() {
 							if (s_ear_isnotch) {
 								/* With central notch */
 								translate([0,0,-s_ear_w/4])
-									cube([dia,s_ear_t*2,s_ear_w/2],center=true);
+									cube([dia,(s_ear_t-.2)*2,s_ear_w/2],center=true);
 							}
 						}
 						sphere(0.2, $fn=20);
@@ -502,7 +547,8 @@ module servo_cable_solid(y=0) {
 /* Servo mask */
 module servo_solid() {
 	union() {
-		cube([s_w, s_h, s_t], center=true);
+		/* Z: +2 for preview */
+		cube([s_w, s_h, s_t+2], center=true);
 
 		servo_ear_solid();
 
@@ -523,7 +569,8 @@ module servo_solid_mask() {
 		}
 		/* Servo gear clearance */
 		translate([0, frame_body_clearance/2,0])
-			cube([s_w, s_h+frame_body_clearance, s_t], center=true);
+			/* Z: +2 for preview */
+			cube([s_w, s_h+frame_body_clearance, s_t+2], center=true);
 	}
 }
 
@@ -596,26 +643,25 @@ module bearing_shaft_solid() {
 			cylinder( r = arm_screw_dia/2, h = 1000, center=true );
 		}
 
-		echo( "******************" );
-		echo( "Bearing shaft/arm screw:" );
+		_SEP();
+		_PRINT("Bearing shaft/arm screw:");
 		if (cyl_bearing) {
-			echo( "**** the shaft inserted in the bearing is printed" );
+			_PRINT("**** the shaft inserted in the bearing is printed");
 		}
 		else {
-			echo( "**** 'arm_screw_head_dia' matches bearing internal diameter:");
-			echo( "**** >> the screw head is the bearing shaft");
+			_PRINT("**** 'arm_screw_head_dia' matches bearing internal diameter:");
+			_PRINT("**** >> the screw head is the bearing shaft");
 		}
-		echo( str("**** screw length (threaded part) should be approximately between ",
+		_PRINT("**** screw length (threaded part) should be approximately between ",
 				frame_gear_clearance + cyl_visible + cyl_bearing + 2,
 				" and ",
-				frame_body_clearance + cyl_visible + cyl_bearing + 1, " mm")
-		    );
-		echo( "**** >> Tuning the length is possible with the 'frame_arm_clearance' parameter" );
-		echo( str("**** screw thread metric is M", arm_screw_dia) );
+				frame_body_clearance + cyl_visible + cyl_bearing + 1, " mm");
+		_PRINT("**** >> Tuning the length is possible with the 'frame_arm_clearance' parameter");
+		_PRINT("**** screw thread metric is M", arm_screw_dia);
 		if (! cyl_bearing) {
-			echo( str("**** screw head is a cylinder with a ", arm_screw_head_dia, "mm diameter") );
+			_PRINT("**** screw head is a cylinder with a ", arm_screw_head_dia, "mm diameter");
 		}
-		echo( "******************" );
+		_SEP();
 	}
 }
 
@@ -641,6 +687,7 @@ module servo_frame() {
 module servo_frame_parts() {
 	servo_frame();
 	servo_ear_support_screw();
+	servo_cover();
 	bearing_shaft_solid();
 	bearing_lock_solid();
 }
