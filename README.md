@@ -30,7 +30,9 @@ If you activate the 'with_bearing' option, you will need:
   (the servo frame accepts 8mm bearing even for 8mm servo)
 - a screw... in the predefined servo list, you have the screw metric. Except for the KST X12 with M2.3, the screws are easy to find. If you have quality M2,M2.5,M3 screws with a minimum length of 10-12mm, you are good to go for any servos. You can find some screw sets anywhere.
 
-There is a special mode triggered when the screw head diameter is equal to bearing internal diameter: the screw head is automatically use as the bearing shaft. This way, you can use screw with cylinder head directly.
+There is special modes depending on bearing dimensions:
+- if screw diameter is equal to bearing internal diameter: screw thread is automatically use as bearing shaft
+- if screw head diameter is equal to bearing internal diameter: screw head is automatically use as bearing shaft
 
 And as always, with or without frame, servo wings must use a thread-locking fluid for the arm screw.
 
