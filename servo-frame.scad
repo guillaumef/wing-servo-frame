@@ -260,7 +260,7 @@ frame_body_clearance	= frame_gear_clearance + s_gear_h;
 
 /* Checks */
 _check_arm_diff	= (s_h_ear - s_h/2 - s_t) - (-s_h/2 + s_cable_h + 4);
-_check_arm_fail = (ear_support_screw>0 && _check_arm_diff<0 && _check_arm_diff < s_ear_w/-2) ? 1 : 0;
+_check_arm_fail = (legformat == 1 && ear_support_screw>0 && _check_arm_diff<0 && _check_arm_diff < s_ear_w/-2) ? 1 : 0;
 if (_check_arm_fail) {
 	_SEP();
 	_WARN( "Unable to produce 'ear_support_screw'>0 - not enough space between cable and ear" );
@@ -614,11 +614,12 @@ module bearing_shaft_solid() {
 		cyl_visible = frame_arm_clearance + b_t/2;
 		cyl_visible_dia = b_id + 1;
 
-		cyl_bearing = ((arm_screw_head_dia == b_id) ?
-				0 /* The screw head is entering the bearing */
+		cyl_bearing = ((arm_screw_head_dia == b_id || arm_screw_dia == b_id) ?
+				0 /* The screw head or the screw is holding the bearing */
 				:
 				b_t+1 /* The shaft is entering the bearing */
 				);
+		screw_bearing = (arm_screw_dia == b_id) ? b_t : 0;
 		cyl_bearing_dia = b_id - 0.1;
 
 		translate([-s_w/2, s_t+s_h/2+frame_body_clearance+frame_extra_width + 1, -s_t/2])
@@ -648,17 +649,21 @@ module bearing_shaft_solid() {
 		if (cyl_bearing) {
 			_PRINT("**** the shaft inserted in the bearing is printed");
 		}
-		else {
+		else if (arm_screw_head_dia == b_id) {
 			_PRINT("**** 'arm_screw_head_dia' matches bearing internal diameter:");
 			_PRINT("**** >> the screw head is the bearing shaft");
 		}
+		else {
+			_PRINT("**** 'arm_screw_dia' matches bearing internal diameter:");
+			_PRINT("**** >> the screw is the bearing shaft");
+		}
 		_PRINT("**** screw length (threaded part) should be approximately between ",
-				frame_gear_clearance + cyl_visible + cyl_bearing + 2,
+				frame_gear_clearance + cyl_visible + cyl_bearing + screw_bearing + 2,
 				" and ",
-				frame_body_clearance + cyl_visible + cyl_bearing + 1, " mm");
+				frame_body_clearance + cyl_visible + cyl_bearing + screw_bearing + 1, " mm");
 		_PRINT("**** >> Tuning the length is possible with the 'frame_arm_clearance' parameter");
 		_PRINT("**** screw thread metric is M", arm_screw_dia);
-		if (! cyl_bearing) {
+		if (! cyl_bearing && ! screw_bearing) {
 			_PRINT("**** screw head is a cylinder with a ", arm_screw_head_dia, "mm diameter");
 		}
 		_SEP();
