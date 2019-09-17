@@ -60,7 +60,28 @@ To manage any kind of servos, choose your way:
 
 ##### Openscad feedback
 
-The scad file is providing you with the 
+The scad file is providing you information feedback on the screw/bearing.
+Like this one:
+```
+ECHO: "******************"
+ECHO: "Bearing shaft/arm screw:"
+ECHO: "**** the shaft inserted in the bearing is printed"
+ECHO: "**** screw length (threaded part) should be approximately between 15.5 and 18.3 mm"
+ECHO: "**** >> Tuning the length is possible with the 'frame_arm_clearance' parameter"
+ECHO: "**** screw thread metric is M3"
+ECHO: "******************"
+```
+Or:
+```
+ECHO: "******************"
+ECHO: "Bearing shaft/arm screw:"
+ECHO: "**** 'arm_screw_dia' matches bearing internal diameter:"
+ECHO: "**** >> the screw is the bearing shaft"
+ECHO: "**** screw length (threaded part) should be approximately between 14.5 and 17.3 mm"
+ECHO: "**** >> Tuning the length is possible with the 'frame_arm_clearance' parameter"
+ECHO: "**** screw thread metric is M3"
+ECHO: "******************"
+```
 
 ### Usage
 
