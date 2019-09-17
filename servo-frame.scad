@@ -79,8 +79,8 @@ servos_kb	= [
 
 /* Brand #2 - KST */
 ,[
-/* Servo #2,0   - KST X12-508 HV   (... screw M2.3 ... why so evil?)              */
-  [ 1, 26.6,   23,   12, 19.9,  5.8,  3.5,  1.2,  4.5,    0,    0,   -2, 5.25,  2.3 ]
+/* Servo #2,0   - KST X12-508 HV        (screw M2.3, why so evil?  => M2.5 tap ) */
+  [ 1, 26.6,   23,   12, 19.9,  5.8,  3.5,  1.2,  4.5,    0,    0,   -2, 5.25,  2.5 ]
 /* Servo #2,1   - KST X10 HV | KST X10 MINI HV                                    */
  ,[ 3, 29.6,   30,   10, 21.6,  6.6,  3.3,  1.8,    6,    8, 10.1,    3, 14.5,  2.5 ]
 /* Servo #2,2   - KST X10-710 HV                                                  */
@@ -114,23 +114,25 @@ servos_kb	= [
  *
  * Set in servo_id the index of the servo needed.
  */
-bearing_id	= 2;
+bearing_id	= 6;
 
 bearings_kb	= [
 
-/*   #0    - MR83ZZ                  */
-  [   3,   8,   3 ]
-
-/*   #1    - MR84ZZ                  */
- ,[   4,   8,   3 ]
-
-/*   #2    - MR85ZZ                  */
- ,[   5,   8, 2.5 ]
-
-/*   #3    - MR93ZZ                  */
+/*   #0    - MR52ZZ L-520ZZ          */
+  [   2,   5, 2.5 ]
+/*   #1    - 682XZZ                  */
+ ,[ 2.5,   6, 2.6 ]
+/*   #2    - MR63ZZ L-630ZZ          */
+ ,[   3,   6, 2.5 ]
+/*   #3    - MR83ZZ                  */
+ ,[   3,   8,   3 ]
+/*   #4    - MR93ZZ                  */
  ,[   3,   9,   4 ]
-
-/*   #4    - MR95ZZ                  */
+/*   #5    - MR84ZZ                  */
+ ,[   4,   8,   3 ]
+/*   #6    - MR85ZZ                  */
+ ,[   5,   8, 2.5 ]
+/*   #7    - MR95ZZ                  */
  ,[   5,   9,   3 ]
 
 ];
@@ -225,7 +227,7 @@ servo	= (_servo_id_brand>=0 && _servo_id_servo>=0)
 	servos_kb[ servo_id[0] ][ servo_id[1] ];
 bearing		= bearings_kb[ bearing_id ];
 
-if (version_num() > 20190101)
+if (version_num() > 20180101)
 	assert( servo, "MISSING SERVO DEFINITION");
 else {
 	if (! servo) echo("!!!! MISSING SERVO DEFINITION !!!!");
@@ -257,6 +259,9 @@ b_t			= bearing[2] 	+ 0.5;
 frame_gear_clearance	= frame_arm_clearance + arm_thickness;
 frame_body_clearance	= frame_gear_clearance + s_gear_h;
 
+if (arm_screw_dia > b_id) {
+   _ERR( "BEARING INTERNAL DIAMETER inferior to SCREW DIAMETER" );
+}
 
 /* Checks */
 _check_arm_diff	= (s_h_ear - s_h/2 - s_t) - (-s_h/2 + s_cable_h + 4);
@@ -277,6 +282,14 @@ module _WARN( a="",b="",c="",d="",e="",f="",g="",h="",i="",j="" ) {
 }
 module _PRINT( a="",b="",c="",d="",e="",f="",g="",h="",i="",j="" ) {
 	echo(str(a,b,c,d,e,f,g,h,i,j));
+}
+module _ERR( a="",b="",c="",d="",e="",f="",g="",h="",i="",j="" ) {
+	if (version_num() > 20180101) {
+		assert(false, str(a,b,c,d,e,f,g,h,i,j));
+	}
+	else {
+		echo(str("ERROR: ",a,b,c,d,e,f,g,h,i,j));
+	}
 }
 
 module servo_ear_solid( masky=0, issupport=0 ) {
