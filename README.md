@@ -2,6 +2,10 @@
 
 Wing servo frame - fully parametric - arms/bearing - servo database
 
+<img src="https://github.com/guillaumef/wing-servo-frame/blob/master/assembly/p01-assembly.jpg" width="500" alt="wing servo frame" align="center" />
+
+<img src="https://github.com/guillaumef/wing-servo-frame/blob/master/assembly/p09-assembly.jpg" width="500" alt="wing servo frame" align="center" />
+
 ### My 'ultimate' wing servo frame
 
 - all servo ears format: 0-no_ear, 1-horizontal_ears, 2-vertical_ears, 3-vertical_three_ears
