@@ -18,10 +18,6 @@ Documentation is in the Scad file.
 
 Examples of generated STL in 'stl_examples' directory.
 
-### Disclaimer
-
-Nearly finished but I am still tweaking printing tolerances.
-
 ### Bearing and screw
 
 It is easy to find, portable and far more cost-effective than commercial products and
