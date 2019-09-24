@@ -2,12 +2,6 @@
 	Author: Guillaume F. ( g@w0.yt )
 	License: GPL
 
-  Changelog:
-   2019-09-14: bearing locker, manage notch/hole servo ear, code cleanup.
-   2019-09-11: manage higher cable position like the KST X12.
-   2019-09-11: manage dual bearing frame, enhance the tolerance, ear screw mount refactored.
-
-
   Servo sizes:
 
      H              E
@@ -114,7 +108,7 @@ servos_kb	= [
  *
  * Set in servo_id the index of the servo needed.
  */
-bearing_id	= 6;
+bearing_id	= 3;
 
 bearings_kb	= [
 
@@ -164,7 +158,7 @@ z_axis_servo_cover	= 1;	/* with ear_support_screw == 0, make a servo cover */
 
 arm_thickness		= 2;	/* Thickness of the servo arm, without the gear, only the arm */
 
-arm_screw_head_dia	= 4;	/* (needed if 'with_bearing')
+arm_screw_head_dia	= 7;	/* (needed if 'with_bearing')
 				 *
 				 * 2 cases:
 				 *
@@ -199,7 +193,7 @@ frame_arm_clearance	= 3;    /* clearance between the servo arm top
 
 /* Bearing properties */
 
-with_bearing 		= 3; 	/* 0: no bearing
+with_bearing 		= 1; 	/* 0: no bearing
 				 * 1: With shaft bearing - Right
 				 * 2: With shaft bearing - Left
 				 * 3: With shaft bearing - Both - universal
@@ -253,8 +247,8 @@ s_cable_h		= servo[12];
 arm_screw_dia		= servo[13];
 
 b_id			= bearing[0];
-b_ed			= bearing[1] 	+ 0.2;
-b_t			= bearing[2] 	+ 0.5;
+b_ed			= bearing[1] 	+ 0.1;
+b_t			= bearing[2] 	+ 0.3;
 
 frame_gear_clearance	= frame_arm_clearance + arm_thickness;
 frame_body_clearance	= frame_gear_clearance + s_gear_h;
@@ -472,15 +466,24 @@ module servo_ear_support_screw() {
 }
 
 module servo_bearing_holder( issupport=0, locker=0 ) {
-	middlering = b_id+(b_ed-b_id)/2;
 	locker_h   = (s_t - b_ed)/2 + b_ed/8;	/* locker lands at 1/8th of the bearing */
 	if (issupport == 0) {
 		if (locker == 0) {
 			/* Bearing surround */
-			translate([s_w/2-s_w_gear,s_h/2+(b_t*2)/2+frame_body_clearance,0]) {
+			translate([s_w/2-s_w_gear,s_h/2+(b_t*2)/2+frame_body_clearance+frame_extra_width/2,0]) {
 				rotate([90,0,0]) {
-					cylinder(r=middlering/2, h=b_t*2+1, center=true);
-					translate([0,s_t/4,0]) cube([middlering,s_t/2,b_t*2+1],center=true);
+					cylinder(r=(b_ed-1)/2, h=b_t*2+frame_extra_width, center=true);
+					translate([0,s_t/4,0]) cube([b_ed-1,s_t/2,b_t*2+frame_extra_width],center=true);
+				}
+			}
+			/* Bearing screw head opening */
+			if (arm_screw_dia == b_id) {
+				translate([s_w/2-s_w_gear,s_h/2+frame_body_clearance+b_t,0]) {
+					rotate([90,0,0]) {
+						translate([0,0,-b_t]) {
+							cylinder(r=arm_screw_head_dia/2+.5, h=b_t, center=true);
+						}
+					}
 				}
 			}
 			/* Bearing */
@@ -654,7 +657,7 @@ module bearing_shaft_solid() {
 					}
 				}
 			}
-			cylinder( r = arm_screw_dia/2, h = 1000, center=true );
+			cylinder( r = arm_screw_dia/2+0.1, h = 1000, center=true );
 		}
 
 		_SEP();
