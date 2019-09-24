@@ -90,7 +90,7 @@ ECHO: "******************"
 - Generate the STL
 - Print...
 
-And as always, with or without frame, servo wings must use a thread-locking fluid for the arm screw.
+And as always, with or without frame, wing servos must use a thread-locking fluid for the arm screw.
 
 ### Printing
 
