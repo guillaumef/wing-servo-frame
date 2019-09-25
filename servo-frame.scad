@@ -191,6 +191,10 @@ frame_arm_clearance	= 3;    /* clearance between the servo arm top
 				 * the arm screw length needed is displayed.
 				 */
 
+frame_mode_light	= 1;	/* 0: solid frame
+				 * 1: make holes in frame: lighter and probably enhance gluing
+				 */
+
 /* Bearing properties */
 
 with_bearing 		= 1; 	/* 0: no bearing
@@ -303,13 +307,13 @@ module servo_ear_solid( masky=0, issupport=0 ) {
 						translate([0,-s_t/2,0]) cube([s_t,s_t/2,s_w+s_ear_w*2],center=true);
 					}
 					if (legformat && _ear_support_screw) {
-						translate([s_t/4,-s_t*3/4-s_ear_t/2,0]) {
-							cube([s_t/2,s_t/2,s_w+s_ear_w*2],center=true);
+						translate([s_t/4,-s_t*3/4-s_ear_t/2+s_ear_w/2,0]) {
+							cube([s_t/2,s_t/2+s_ear_w,s_w+s_ear_w*2+frame_extra_width],center=true);
 						}
 					}
 					else {
 						translate([0,-s_t/4-s_ear_t/2,0])
-							cube([s_t,s_t/2,s_w+s_ear_w*2],center=true);
+							cube([s_t,s_t/2,s_w+s_ear_w*2+frame_extra_width],center=true);
 					}
 				}
 			}
@@ -339,21 +343,30 @@ module servo_ear_solid( masky=0, issupport=0 ) {
 		/* bottom blocker */
 		translate([0,-s_h/2,-s_t/2])
 		{
+			wall=(s_ear_w<4)?2:s_ear_w/2;
 			difference()
 			{
 				rotate([0,90,0])
 					scale([s_t,s_ear_w+frame_extra_width,1])
-					cylinder(r=1,h=s_w,center=true);
+					difference() {
+						cylinder(r=1,h=s_w,center=true);
+						if (frame_mode_light)
+							cylinder(r=.7,h=s_w,center=true);
+					}
 				translate([0,0,-500])
 					cube([1000,1000,1000],center=true);
 				translate([0,500,0])
 					cube([1000,1000,1000],center=true);
 				nb=3;
-				wall=(s_ear_w<4)?2:s_ear_w/2;
 				cell=(s_w-wall*(nb+1))/nb;
-				for(x=[-s_w/2+wall:cell+wall:s_w/2])
+				for(x=[-s_w/2+wall:cell+wall:s_w/2]) {
 					translate([x+cell/2,-s_h/2-wall,0])
 						cube([cell,s_h,1000],center=true);
+				}
+			}
+			if (frame_mode_light) {
+				translate([0,-wall/2,s_t/2])
+					cube([s_w,wall,s_t*.8],center=true);
 			}
 			/* no z-axis locking - adding a flat surface */
 			if (_ear_support_screw == 0) {
@@ -592,6 +605,19 @@ module servo_solid_mask() {
 
 /* Frame */
 
+module frame_solid_light_mask() {
+	sz=(s_ear_w + frame_extra_width) / 3.0;
+	bdx=(s_w+s_ear_w+frame_extra_width)/2;
+	bdy=(s_h+s_ear_w+frame_extra_width)/2;
+	bdymax = bdy + frame_body_clearance;
+	ratiodensity = floor(bdx/sz);
+	for(x=[bdx*-1:(bdx*2)/ratiodensity:bdx+0.01]) {
+		for(y=[bdy*-1:(bdy+bdymax)/ratiodensity:bdymax+0.01]) {
+			translate([x,y,0])
+				cube([ sz, sz, 1000 ], center=true);
+		}
+	}
+}
 
 module frame_solid() {
 	extra_width = frame_extra_width - minkowski_rounded;
@@ -612,6 +638,8 @@ module frame_solid() {
 		}
 		translate([-500,-500,-1000])
 			cube([1000,1000,1000]);
+		if (frame_mode_light)
+			frame_solid_light_mask();
 	}
 }
 
