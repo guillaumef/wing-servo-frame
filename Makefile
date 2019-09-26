@@ -7,7 +7,7 @@ help:
 
 
 list:
-	@for tg in `grep 'Servo #' servo-frame.scad | sed -e 's/.*#//' | sed -e 's/ *- */ /' | sed -e 's/[\/|(*].*//' | sed -e 's/  */ /' | sed -e 's/ *$$//' | sed -e 's/ /,/g'`; do \
+	@for tg in `grep 'Servo #' servo-frame.scad | sed -e 's/.*#//' | sed -e 's/ *- */ /' | sed -e 's/[*].*//' | sed -e 's/  */ /' | sed -e 's/ *$$//' | sed -e 's/ /,/g'`; do \
 		SERV_BRAND=`echo "$$tg" | cut -f 1 -d ','`;					\
 		SERV_SERVO=`echo "$$tg" | cut -f 2 -d ','`;					\
 		SERV_NAME=`echo "$$tg" | sed -e 's/^[0-9]*,[0-9]*,//' | sed -e 's/,/ /g'`;	\
@@ -17,7 +17,7 @@ list:
 sync:
 	@sed -e '/^Servo list:/,$$d' README.md > README.md.tmp
 	@/bin/echo -e "Servo list:\n" >> README.md.tmp
-	@for tg in `grep 'Servo #' servo-frame.scad | sed -e 's/.*#//' | sed -e 's/ *- */ /' | sed -e 's/[\/|(*].*//' | sed -e 's/  */ /' | sed -e 's/ *$$//' | sed -e 's/ /,/g'`; do \
+	@for tg in `grep 'Servo #' servo-frame.scad | sed -e 's/.*#//' | sed -e 's/ *- */ /' | sed -e 's/[*].*//' | sed -e 's/  */ /' | sed -e 's/ *$$//' | sed -e 's/ /,/g'`; do \
 		SERV_BRAND=`echo "$$tg" | cut -f 1 -d ','`;					\
 		SERV_SERVO=`echo "$$tg" | cut -f 2 -d ','`;					\
 		SERV_NAME=`echo "$$tg" | sed -e 's/^[0-9]*,[0-9]*,//' | sed -e 's/,/ /g'`;	\
