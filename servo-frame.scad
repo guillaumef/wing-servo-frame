@@ -24,7 +24,6 @@
   SERVO DIMENSIONS:
 
     Format: [ LEG_FORMAT, CABLE_SIDE, A, B, C, D, E, F, G, H ]
-
     
     - LEG_FORMAT: 0-no_ear, 1-horizontal_ears, 2-vertical_ears, 3-vertical_three_ears
     - A: body height (servo bottom to gear root)
@@ -48,9 +47,7 @@
 servo_id	= [ 1 , 0 ];   /* Brand,Servo */
 
 servos_kb	= [ 
-/*
- *        A     B     C     D     E     F     G     H     I     J     K     L     M
- */
+/*       A     B     C     D     E     F     G     H     I     J     K     L     M */
 /* Brand #0 - MKS */
 [
 /* Servo #0,0    - MKS DS6100 / HV6100                                           */
@@ -63,6 +60,7 @@ servos_kb	= [
  ,[ 2, 29.5,   30,   10, 19.8,  6.5,  2.8,    2,    6,    8,    0,    3,    2,  2.5 ] 
 ]
 
+/*       A     B     C     D     E     F     G     H     I     J     K     L     M */
 /* Brand #1 - BlueBird */
 ,[
 /* Servo #1,0   - BlueBird BMS-125WV / BMS-126WV / BMS-127WV                     */
@@ -71,20 +69,24 @@ servos_kb	= [
  ,[ 1, 27.5,   23,   12, 20.1,  5.7,  3.8,    2, 4.75,    0,    0,   -2,    6,    3 ]
 ]
 
+/*       A     B     C     D     E     F     G     H     I     J     K     L     M */
 /* Brand #2 - KST */
 ,[
-/* Servo #2,0   - KST X12-508 HV        (screw M2.3, why so evil?  => M2.5 tap ) */
+/* Servo #2,0   - KST X12-508 HV        (screw M2.3, why so evil?  => M2.5 tap )  */
   [ 1, 26.6,   23,   12, 19.9,  5.8,  3.5,  1.2,  4.5,    0,    0,   -2, 5.25,  2.5 ]
-/* Servo #2,1   - KST X10 HV | KST X10 MINI HV                                    */
- ,[ 3, 29.6,   30,   10, 21.6,  6.6,  3.3,  1.8,    6,    8, 10.1,    3, 14.5,  2.5 ]
-/* Servo #2,2   - KST X10-710 HV                                                  */
+/* Servo #2,1   - KST X10 HV                                                      */
+ ,[ 3, 35.5,   30,   10, 27.5,  6.6,  3.3,  1.8,    6,    8, 10.1,    3, 14.5,  2.5 ]
+/* Servo #2,2   - KST X10 MINI HV                                                 */
+ ,[ 3, 29.6,   30,   10, 21.6,  6.6,  3.3,  1.8,    6,    8, 10.1,    3, 10.5,  2.5 ]
+/* Servo #2,3   - KST X10-710 HV                                                  */
  ,[ 1, 29.6,   30,   10, 21.6,  6.6,  3.3,  1.9,    6,    0,    0,    3,    8,  2.5 ]
-/* Servo #2,3   - KST X08H V5 HV                                                  */
+/* Servo #2,4   - KST X08H V5 HV                                                  */
  ,[ 2,   21, 23.5,    8, 14.9,  6.1,  2.9,    1,    3,    4,    0,  1.6,    0,    2 ]
-/* Servo #2,4   - KST X08 V5 HV                                                   */
+/* Servo #2,5   - KST X08 V5 HV                                                   */
  ,[ 1,   21, 23.5,    8, 14.9, 6.13,  2.9,    1,    3,    0,    0,    2,    0,    2 ]
 ]
 
+/*       A     B     C     D     E     F     G     H     I     J     K     L     M */
 /* Brand #3 - Emax : Double-check with digital caliper on those... */
 ,[
 /* Servo #3,0   - Emax ES3352                                                     */
@@ -93,6 +95,7 @@ servos_kb	= [
  ,[ 1,   24,23.85, 11.8,   15, 5.42,  3.4, 1.65, 4.16,    0,    0,  2.0,    1,    2 ]
 ]
 
+/*       A     B     C     D     E     F     G     H     I     J     K     L     M */
 /* Brand #4 - TowerPro ... because sometimes you don't care */
 ,[
 /* Servo #4,0   - TowerPro MG90D 15g                                              */
@@ -569,8 +572,11 @@ module servo_gear_solid( issupport=0 ) {
 }
 
 module servo_cable_solid(y=0) {
-	translate([0,-s_h/2+2 + s_cable_h,y/2])
-		cube([1000,4,6+y], center=true);
+	w = (legformat<2) ? 4 : 6;
+	t = (legformat<2) ? 6 : 4;
+	translate([0,-s_h/2+w/2 + s_cable_h,y/2]) {
+		cube([1000,w,t+y], center=true);
+	}
 }
 
 /* Servo mask */
@@ -591,11 +597,12 @@ module servo_solid_mask() {
 	union() {
 		servo_solid();
 
-		/* More mask */
 		servo_cable_solid(100);
+
 		if (legformat>1) {
 			servo_ear_solid(100);
 		}
+
 		/* Servo gear clearance */
 		translate([0, frame_body_clearance/2,0])
 			/* Z: +2 for preview */

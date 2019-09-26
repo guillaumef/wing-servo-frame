@@ -11,28 +11,30 @@ Wing servo frame - fully parametric - arms/bearing - servo database
   <source src="https://github.com/guillaumef/wing-servo-frame/blob/master/assembly/video.mp4" type="video/mp4">
 </video>
 
-### My 'ultimate' wing servo frame
+### Project description
 
 - all servo ears format: 0-no_ear, 1-horizontal_ears, 2-vertical_ears, 3-vertical_three_ears
 - parametric servo dimensions
 - parametric bearing dimensions (like: MR83ZZ -> MR95ZZ ...)
 - with or without external bearing (parametric bearing dimensions), left/right/both sides
 - for horizontal ears, manage ear notch, screws or both
-- many options (general thickness, arm clearance, frame round factor, ...)
+- many options (general thickness, arm clearance, frame round factor, mode light, ...)
 - no added height to the servo thickness
 
-Changelog is in the Scad file.
+### Directories/files
 
-Documentation is in the Scad file.
-
-Examples of generated STL in 'stl_examples' directory.
+- servo-frame.scad : OpenScad code and embedded documentation
+- Makefile : generate the STLs for all known servos
+- stl_examples : examples STLs
+- assembly : pictures and video of the assembly
 
 ### Bearing and screw
 
-It is easy to find, portable and far more cost-effective than commercial products and
+Both are easy to find, portable and far more cost-effective than commercial products and
 proprietary arm screws.
 
-The screw diameter (servo arm screw) must be inferior or equal to the bearing internal diameter.
+The trivial constraint:
+screw diameter (servo arm screw) must be inferior or equal to the bearing internal diameter.
 
 ##### Screw
 
@@ -102,3 +104,24 @@ And as always, with or without frame, wing servos must use a thread-locking flui
 100% infill, ABS or Nylon material. Small layer printing is better.
 On a Ultimaker2, ~ one servo frame per hour in good quality (layer 0.1mm).
 
+### Servo knowledge base
+
+If you add new servo dimensions to the list, please provide them via a Github Issue.
+
+Servo list:
+
+- MKS DS6100
+- MKS DS75K
+- MKS DS75K-N
+- MKS HV6130
+- BlueBird BMS-125WV
+- BlueBird BMS-207WV
+- KST X12-508 HV
+- KST X10 HV
+- KST X10 MINI HV
+- KST X10-710 HV
+- KST X08H V5 HV
+- KST X08 V5 HV
+- Emax ES3352
+- Emax ES08MDII
+- TowerPro MG90D 15g
