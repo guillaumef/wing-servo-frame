@@ -64,17 +64,20 @@ servos_kb	= [
 /* Brand #1 - BlueBird */
 ,[
 /* Servo #1,0   - BlueBird BMS-125WV / BMS-126WV / BMS-127WV                     */
-  [ 1,   20, 23.3,   10,   15, 5.43,  3.8,  1.3,  4.6,    0,    0,   -2,    0,    3 ]
+  [ 1,   20, 23.2,   10,   15, 5.43,  3.8,  1.3,  4.6,    0,    0,   -2,    0,    3 ]
 /* Servo #1,1   - BlueBird BMS-207WV                                             */
  ,[ 1, 27.5,   23,   12, 20.1,  5.7,  3.8,    2, 4.75,    0,    0,   -2,    6,    3 ]
+/* Servo #1,2   - BlueBird BMS-115HV                                             */
+ ,[ 2,   20, 23.2,   10, 12.5, 5.43,  3.8,  1.2,  4.6,    7,    0,   -2,    0,    3 ]
+
 ]
 
 /*       A     B     C     D     E     F     G     H     I     J     K     L     M */
 /* Brand #2 - KST */
 ,[
-/* Servo #2,0   - KST X12-508 HV        (screw M2.3, why so evil?  => M2.5 tap )  */
+/* Servo #2,0   - KST X12-508 HV                                                  */
   [ 1, 26.6,   23,   12, 19.9,  5.8,  3.5,  1.2,  4.5,    0,    0,   -2, 5.25,  2.5 ]
-/* Servo #2,1   - KST X10 HV                                                      */
+/* Servo #2,1   - KST X10 HV / DS125MG                                            */
  ,[ 3, 35.5,   30,   10, 27.5,  6.6,  3.3,  1.8,    6,    8, 10.1,    3, 14.5,  2.5 ]
 /* Servo #2,2   - KST X10 MINI HV                                                 */
  ,[ 3, 29.6,   30,   10, 21.6,  6.6,  3.3,  1.8,    6,    8, 10.1,    3, 10.5,  2.5 ]
@@ -236,26 +239,26 @@ else {
 
 
 legformat		= servo[0];
-s_h			= servo[1] 	+ 0.1;
-s_w			= servo[2]	+ 0.1;
+s_h			= servo[1] 	+ .3;
+s_w			= servo[2]	+ .3;
 s_t			= servo[3];
-s_h_ear			= servo[4]	+ 0.1;
+s_h_ear			= servo[4]	+ .1;
 s_w_gear		= servo[5];
 s_gear_h		= servo[6];
 
-s_ear_t			= (legformat)?servo[7]	+ 0.1 : 0;
+s_ear_t			= (legformat)?servo[7]	+ .1 : 0;
 
-s_ear_w			= (legformat)?servo[8]	+ 0.2 : 3;
-s_ear_h			= (servo[9]?servo[9]:servo[8]) + 0.2;
-s_ear_h_third		= (servo[10]?servo[10] + 0.2 : s_ear_h);
+s_ear_w			= (legformat)?servo[8]	+ .2 : 3;
+s_ear_h			= (servo[9]?servo[9]:servo[8]) + .2;
+s_ear_h_third		= (servo[10]?servo[10] + .2 : s_ear_h);
 s_ear_isnotch		= (servo[11]<0) ? 1 : 0;
 s_ear_hole_dia		= abs(servo[11]);
 s_cable_h		= servo[12];
 arm_screw_dia		= servo[13];
 
 b_id			= bearing[0];
-b_ed			= bearing[1] 	+ 0.1;
-b_t			= bearing[2] 	+ 0.3;
+b_ed			= bearing[1] 	+ .1;
+b_t			= bearing[2] 	+ .3;
 
 frame_gear_clearance	= frame_arm_clearance + arm_thickness;
 frame_body_clearance	= frame_gear_clearance + s_gear_h;

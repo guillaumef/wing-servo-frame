@@ -110,14 +110,15 @@ If you add new servo dimensions to the list, please provide them via a Github Is
 
 Servo list:
 
-- MKS DS6100
+- MKS DS6100 / HV6100
 - MKS DS75K
 - MKS DS75K-N
 - MKS HV6130
-- BlueBird BMS-125WV
+- BlueBird BMS-125WV / BMS-126WV / BMS-127WV
 - BlueBird BMS-207WV
+- BlueBird BMS-115HV
 - KST X12-508 HV
-- KST X10 HV
+- KST X10 HV / DS125MG
 - KST X10 MINI HV
 - KST X10-710 HV
 - KST X08H V5 HV
