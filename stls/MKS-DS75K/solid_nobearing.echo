@@ -1,0 +1,4 @@
+ECHO: "******************"
+ECHO: "WARNING: Unable to produce 'ear_support_screw'>0 - not enough space between cable and ear"
+ECHO: "WARNING: Falling back to ear_support_screw=0"
+ECHO: "******************"

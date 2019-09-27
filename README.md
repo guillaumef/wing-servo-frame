@@ -6,17 +6,14 @@ Wing servo frame - fully parametric - arms/bearing - servo database
 
 <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/assembly/p06-assembly.jpg" width="500" alt="wing servo frame" align="center" />
 
-<video>
-  <source src="https://github.com/guillaumef/wing-servo-frame/blob/master/assembly/video.webm" type="video/webm; codecs=vp9,vorbis">
-  <source src="https://github.com/guillaumef/wing-servo-frame/blob/master/assembly/video.mp4" type="video/mp4">
-</video>
+<img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-X10-MINI-HV/hollow_bearingLR_2.5x6x2.6.gif" width="300" alt="KST X10 Mini HV frame" />
 
 ### Project description
 
-- all servo ears format: 0-no_ear, 1-horizontal_ears, 2-vertical_ears, 3-vertical_three_ears
+- all servo ears format
 - parametric servo dimensions
 - parametric bearing dimensions (like: MR83ZZ -> MR95ZZ ...)
-- with or without external bearing (parametric bearing dimensions), left/right/both sides
+- with or without external bearing (also with parametric bearing dimensions), left/right/both sides
 - for horizontal ears, manage ear notch, screws or both
 - many options (general thickness, arm clearance, frame round factor, mode light, ...)
 - no added height to the servo thickness
@@ -24,8 +21,9 @@ Wing servo frame - fully parametric - arms/bearing - servo database
 ### Directories/files
 
 - servo-frame.scad : OpenScad code and embedded documentation
+- configuration.scad : Configuration and constants with embedded documentation
 - Makefile : generate the STLs for all known servos
-- stl_examples : examples STLs
+- stls : some auto-generated STLs for each servo in the KB (in some configurations)
 - assembly : pictures and video of the assembly
 
 ### Bearing and screw
@@ -65,6 +63,15 @@ To manage any kind of servos, choose your way:
 - To get a printed shaft, buy a bunch of 5mm internal diameter. i.e:
   - MR85ZZ (5x8x2.5)
 
+##### STLs directory
+
+To ease the process, this directory provides multiple automatically generated STLs in some configurations:
+- hollow / solid frame
+- bearing: none/left/right/both
+
+The configuration file is provided for each generated stl.
+The bearing size is chosen for the best case scenario per servo: screw as the bearing shaft.
+
 ##### Openscad feedback
 
 The scad file is providing you information feedback on the screw/bearing.
@@ -93,7 +100,8 @@ ECHO: "******************"
 ### Usage
 
 - Install OpenScad
-- Edit the servo-frame.scad file to fit your needs (openscad preview can be tricked by the complexity, use F6 to render the final version if necessary)
+- Launch openscad on servo-frame.scad
+- Edit the configuration.scad file to fit your needs (openscad preview can be a bit tricked by the complexity, use F6 to render the final version if necessary)
 - Generate the STL
 - Print...
 
@@ -104,9 +112,10 @@ And as always, with or without frame, wing servos must use a thread-locking flui
 100% infill, ABS or Nylon material. Small layer printing is better.
 On a Ultimaker2, ~ one servo frame per hour in good quality (layer 0.1mm).
 
-### Servo knowledge base
+### Servo database
 
-If you add new servo dimensions to the list, please provide them via a Github Issue.
+If you add new servo dimensions to the list, I will be pleased to include them.
+You can provide them via a Github Issue. Thanks!
 
 Servo list:
 
