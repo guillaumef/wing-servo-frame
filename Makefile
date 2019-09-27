@@ -41,7 +41,7 @@ stlconfs:
 		mkdir -p $$DIR_TG;					\
 		\
 		echo "Get bearing info";					\
-		openscad -q -D _servo_id_brand=$$SERV_BRAND 			\
+		openscad -D _servo_id_brand=$$SERV_BRAND 			\
 			-D _servo_id_servo=$$SERV_SERVO				\
 			-D _proc=1						\
 			-o bearing.echo						\
@@ -102,9 +102,9 @@ stlfiles: $(TODO) $(GIFS)
 	 ECHO=`echo "$@" | sed -e 's/stl$$/echo/'`;				\
 	 BASENAME=`basename "$<"`;						\
 	 sed -E "s/<configuration.scad>/<$$BASENAME>/" servo-frame.scad	> "$$SRC";	\
-	 openscad -q -o "$$ECHO" "$$SRC";					\
-	 echo "openscad -q -o \"$@\" \"$$SRC\""; 				\
-	 openscad -q -o "$@" "$$SRC";						\
+	 openscad -o "$$ECHO" "$$SRC";						\
+	 echo "openscad -o \"$@\" \"$$SRC\""; 					\
+	 openscad -o "$@" "$$SRC";						\
 	 rm -f "$$SRC"
 
 %.gif: %.stl
@@ -121,7 +121,7 @@ stlfiles: $(TODO) $(GIFS)
 	   i=$$(($$i+10));							\
 	 done;									\
 	 convert '$@.*.png' -set delay 1x5 $@;					\
-	 rm -f $@.*.png
+	 rm -f $$SRC $@.*.png
 
 cleanstl:
 	@rm -f stls/*/*.stl
