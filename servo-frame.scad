@@ -2,6 +2,17 @@
 	Author: Guillaume F. ( g@w0.yt )
 	License: GPL
 
+	WING SERVO FRAME
+
+ */
+
+
+/* Configuration */
+
+include <configuration.scad>
+
+/*
+
   Servo sizes:
 
      H              E
@@ -44,7 +55,6 @@
     Set servo_brand/servo_id the index of the servo needed.
  */
 
-servo_id	= [ 1 , 0 ];   /* Brand,Servo */
 
 servos_kb	= [ 
 /*       A     B     C     D     E     F     G     H     I     J     K     L     M */
@@ -120,7 +130,6 @@ servos_kb	= [
  *
  * Set in servo_id the index of the servo needed.
  */
-bearing_id	= 2;
 
 bearings_kb	= [
 
@@ -143,111 +152,36 @@ bearings_kb	= [
 
 ];
 
-
-/*
-   Options - External to servo dimensions
- */
-
-
-/* Ears properties */
-
-ear_support_screw	= 1;	/* for LEG_FORMAT=1, manage L-shaped block vertically screwed on
-				 * the servo frame
-				 * Modes:
-				 *
-				 *   0: no z-axis locking - classic for wing bottom skin strap mount
-				 *   1: with a central notch in servo ear
-				 *   2: with screws in servo ear
-				 *   3: 1&2
-				 *
-				 */
-ear_support_screwhead	= 3;	/* with ear_support_screw == 2, diameter of the screw head */
-
-z_axis_servo_cover	= 1;	/* with ear_support_screw == 0, make a servo cover */
-
-
-/* Servo arm properties */
-
-arm_thickness		= 2;	/* It is the added thickness of the servo arm between the
-				 * arm screw head (top of the threaded part) and the servo gear !
-				 * With plastic arm, it is often low, like .5 ~ 1 mm
-				 * With aluminium arm, it is bigger, like 1 ~ 2.5 mm
-				 *
-				 * If you don't know, take a secure value of 2mm so you will be
-				 * able to trim the cone part if it is too big.
-				 *
-				 * You have to consider the servo arm height part which is covering
-				 * the screw head and add it to the "frame_arm_clearance".
-				 */
-
-arm_screw_head_dia	= 5.5;	/* (needed if 'with_bearing')
-				 *
-				 * 2 cases:
-				 *
-				 * - arm_screw_head_dia == bearing internal diameter
-				 *    The screw head is used directly in the bearing
-				 *    The bearing shaft produced is a spacer
-				 *    to lock the servo arm in place.
-				 *    => shorted screw needed.
-				 *
-				 * - arm_screw_head_dia != bearing internal diameter
-				 *    The screw head is locking the bearing shaft externally.
-				 *    The bearing shaft produced is entering in the bearing.
-				 *    => longer screw needed.
-				 *
-				 */
-
-/* Frame properties */
-
-frame_thickness		= 1.5; 	/* thickness of the frame */
-
-frame_extra_width	= 3.0; 	/* extra width of the frame */
-
-frame_arm_clearance	= 6;    /* clearance between the servo arm top (arm screw hole)
-				 * and the start of the servo frame top
-				 * (aka bearing support if 'with_bearing').
-				 *
-				 * See also 'arm_thickness' definition.
-				 *
-				 * if 'with_bearing', this frame arm clearance is going to
-				 * define the Arm screw length.
-				 * In the console of openscad, for the current parameters,
-				 * the arm screw length needed is displayed.
-				 */
-
-frame_mode_light	= 1;	/* 0: solid frame
-				 * 1: make holes in frame: lighter and probably enhance gluing
-				 */
-
-/* Bearing properties */
-
-with_bearing 		= 1; 	/* 0: no bearing
-				 * 1: With shaft bearing - Right
-				 * 2: With shaft bearing - Left
-				 * 3: With shaft bearing - Both - universal
-				 */
-
-/* MISC */
-
-minkowski_rounded 	= 2;	/* rounded frame sphere */
-
-$fn 			= 100;  /* Global circles segment number: 30 for design, >=100 for STL */
-
-
 /*
  * Processing - internals and some spacers
  */
 
 _servo_id_brand	= -1;
 _servo_id_servo	= -1;
-
+_bearing_id     = -1;
+_proc		= -1;
 
 servo	= (_servo_id_brand>=0 && _servo_id_servo>=0)
 	?
 	servos_kb[_servo_id_brand][_servo_id_servo]	/* From commandline */
 	:
 	servos_kb[ servo_id[0] ][ servo_id[1] ];
-bearing		= bearings_kb[ bearing_id ];
+
+bearing	= (_bearing_id>=0)
+	?
+	bearings_kb[ _bearing_id ]
+	:
+	bearings_kb[ bearing_id ];
+
+if (_proc == 1) {
+	/* Ask for servo info -> bearing best match */
+	for (x = [0:1:len(bearings_kb)-1]) {
+		if (servo[ 13 ] == bearings_kb[x][0]) {
+			_PRINT( "bearing:", x, " format:",bearings_kb[x][0],"x",bearings_kb[x][1],"x",bearings_kb[x][2] );
+		}
+	}
+	_ERR("end");
+}
 
 if (version_num() > 20180101)
 	assert( servo, "MISSING SERVO DEFINITION");
@@ -294,7 +228,7 @@ if (_check_arm_fail) {
 	_WARN( "Falling back to ear_support_screw=0" );
 	_SEP();
 }
-_ear_support_screw	= (_check_arm_fail)? 0 : ear_support_screw;
+_ear_support_screw	= (_check_arm_fail || legformat==0)? 0 : ear_support_screw;
 
 
 /* Modules.. */
@@ -318,7 +252,7 @@ module servo_ear_solid( masky=0, issupport=0 ) {
 	if (legformat <= 1) {
 		/* ears */
 		translate([ 0, s_h_ear - s_h/2 + s_ear_t/2, 0]) {
-			cube([s_w+s_ear_w*2,s_ear_t, s_t], center=true);
+			cube([s_w+s_ear_w*2,s_ear_t, s_t+.1], center=true);
 			if (issupport) {
 				rotate([0,90,0]) {
 					translate([0,s_ear_t/2,0])
@@ -344,7 +278,7 @@ module servo_ear_solid( masky=0, issupport=0 ) {
 			else {
 				if (legformat && _ear_support_screw) {
 					translate([0,-s_t/4-s_ear_t/2,0])
-						cube([s_w+s_ear_w*2,s_t/2, s_t], center=true);
+						cube([s_w+s_ear_w*2,s_t/2, s_t+.1], center=true);
 					translate([0,-s_t*3/4-s_ear_t/2,0]) {
 						translate([-s_w/2-s_ear_w/2,0,0])
 							cylinder(r=0.8,h=200,center=true);
@@ -509,8 +443,8 @@ module servo_bearing_holder( issupport=0, locker=0 ) {
 			/* Bearing surround */
 			translate([s_w/2-s_w_gear,s_h/2+(b_t*2)/2+frame_body_clearance+frame_extra_width/2,0]) {
 				rotate([90,0,0]) {
-					cylinder(r=(b_ed-1)/2, h=b_t*2+frame_extra_width, center=true);
-					translate([0,s_t/4,0]) cube([b_ed-1,s_t/2,b_t*2+frame_extra_width],center=true);
+					cylinder(r=(b_ed-1)/2, h=b_t*2+frame_extra_width+0.1, center=true);
+					translate([0,s_t/4,0]) cube([b_ed-1,s_t/2,b_t*2+frame_extra_width+0.1],center=true);
 				}
 			}
 			/* Bearing screw head opening */
@@ -527,7 +461,9 @@ module servo_bearing_holder( issupport=0, locker=0 ) {
 			translate([s_w/2-s_w_gear,s_h/2+frame_body_clearance,0]) {
 				rotate([90,0,0]) {
 					translate([0,0,-b_t]) {
-						cylinder(r=b_ed/2, h=b_t, center=true);
+						/* Ovalized a bit to avoid any unecessary vertical force on the shaft */
+						scale([1,1.2,1])
+							cylinder(r=b_ed/2, h=b_t, center=true);
 						translate([0,s_t/4,0]) cube([b_ed,s_t/2,b_t],center=true);
 					}
 				}
@@ -540,7 +476,8 @@ module servo_bearing_holder( issupport=0, locker=0 ) {
 				translate([0,0,-b_t + b_t_clearance/2]) {
 					difference() {
 						translate([0,s_t/2 - 1.5,0]) cube([s_w*10,3,b_t-b_t_clearance],center=true);
-						cylinder(r=b_ed/2, h=b_t+1, center=true);
+						scale([1,1.2,1]) /* also ovalized */
+							cylinder(r=b_ed/2, h=b_t+1, center=true);
 					}
 				}
 			}
@@ -559,27 +496,34 @@ module servo_bearing_holder( issupport=0, locker=0 ) {
 	}
 }
 
+module servo_bearing_holder_cut_mask() {
+	translate([0,s_h/2+(b_t*2)/2+frame_body_clearance,0]) {
+		translate([0,0,s_t - 1.2])
+			cube([b_t,b_t*1.5,s_t],center=true);
+		translate([s_w-s_w_gear*2,0,s_t - 1.2])
+			cube([b_t,b_t*1.5,s_t],center=true);
+	}
+}
 module servo_bearing_holder_screw_mask() {
-	cylinder(r=.8,h=s_t, center=true, $fn=20);
-	translate([0,0,s_t - 1.2])
-		cube([b_t,b_t*1.5,s_t],center=true);
+	translate([0,s_h/2+(b_t*2)/2+frame_body_clearance,0]) {
+		cylinder(r=.8,h=s_t*2, center=true, $fn=20);
+		translate([s_w-s_w_gear*2,0,0])
+			cylinder(r=.8,h=s_t*2, center=true, $fn=20);
+	}
 }
 
 module servo_bearing_holder_wscrew( issupport=0, locker=0 ) {
 	difference() {
 		servo_bearing_holder( issupport, locker );
-		translate([0,s_h/2+(b_t*2)/2+frame_body_clearance,0]) {
-			servo_bearing_holder_screw_mask();
-			translate([s_w-s_w_gear*2,0,0])
-				servo_bearing_holder_screw_mask();
-		}
+		servo_bearing_holder_cut_mask();
+		servo_bearing_holder_screw_mask();
 	}
 }
 
 module servo_gear_solid( issupport=0 ) {
 	translate([s_w/2-s_w_gear,s_h/2+s_gear_h/2,0]) {
 		rotate([90,0,0])
-		cylinder(r=2.75, h=s_gear_h, center=true);
+		cylinder(r=2.75, h=s_gear_h, center=true, $fn=20);
 	}
 	if (with_bearing) {
 		if (with_bearing != 2) {
@@ -588,6 +532,18 @@ module servo_gear_solid( issupport=0 ) {
 		if (with_bearing != 1) {
 			mirror([1,0,0])
 				servo_bearing_holder_wscrew( issupport );
+		}
+	}
+}
+
+module servo_bearing_holder_fullscrew_mask() {
+	if (with_bearing) {
+		if (with_bearing != 2) {
+			servo_bearing_holder_screw_mask();
+		}
+		if (with_bearing != 1) {
+			mirror([1,0,0])
+				servo_bearing_holder_screw_mask();
 		}
 	}
 }
@@ -628,6 +584,8 @@ module servo_solid_mask() {
 		translate([0, frame_body_clearance/2,0])
 			/* Z: +2 for preview */
 			cube([s_w, s_h+frame_body_clearance, s_t+2], center=true);
+
+		servo_bearing_holder_fullscrew_mask();
 	}
 }
 
@@ -769,8 +727,5 @@ module servo_frame_parts() {
 	bearing_lock_solid();
 }
 
-
 servo_frame_parts();
-
-//servo_frame();
 

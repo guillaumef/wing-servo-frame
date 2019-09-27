@@ -1,7 +1,0 @@
-ECHO: "******************"
-ECHO: "Bearing shaft/arm screw:"
-ECHO: "**** the shaft inserted in the bearing is printed"
-ECHO: "**** screw length (threaded part) should be approximately between 15.5 and 17.3 mm"
-ECHO: "**** >> Tuning the length is possible with the 'frame_arm_clearance' parameter"
-ECHO: "**** screw thread metric is M2.5"
-ECHO: "******************"
