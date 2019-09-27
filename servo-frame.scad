@@ -120,7 +120,7 @@ servos_kb	= [
  *
  * Set in servo_id the index of the servo needed.
  */
-bearing_id	= 3;
+bearing_id	= 2;
 
 bearings_kb	= [
 
@@ -168,9 +168,19 @@ z_axis_servo_cover	= 1;	/* with ear_support_screw == 0, make a servo cover */
 
 /* Servo arm properties */
 
-arm_thickness		= 2;	/* Thickness of the servo arm, without the gear, only the arm */
+arm_thickness		= 2;	/* It is the added thickness of the servo arm between the
+				 * arm screw head (top of the threaded part) and the servo gear !
+				 * With plastic arm, it is often low, like .5 ~ 1 mm
+				 * With aluminium arm, it is bigger, like 1 ~ 2.5 mm
+				 *
+				 * If you don't know, take a secure value of 2mm so you will be
+				 * able to trim the cone part if it is too big.
+				 *
+				 * You have to consider the servo arm height part which is covering
+				 * the screw head and add it to the "frame_arm_clearance".
+				 */
 
-arm_screw_head_dia	= 7;	/* (needed if 'with_bearing')
+arm_screw_head_dia	= 5.5;	/* (needed if 'with_bearing')
 				 *
 				 * 2 cases:
 				 *
@@ -193,9 +203,11 @@ frame_thickness		= 1.5; 	/* thickness of the frame */
 
 frame_extra_width	= 3.0; 	/* extra width of the frame */
 
-frame_arm_clearance	= 3;    /* clearance between the servo arm top
+frame_arm_clearance	= 6;    /* clearance between the servo arm top (arm screw hole)
 				 * and the start of the servo frame top
 				 * (aka bearing support if 'with_bearing').
+				 *
+				 * See also 'arm_thickness' definition.
 				 *
 				 * if 'with_bearing', this frame arm clearance is going to
 				 * define the Arm screw length.
@@ -718,9 +730,9 @@ module bearing_shaft_solid() {
 			_PRINT("**** >> the screw is the bearing shaft");
 		}
 		_PRINT("**** screw length (threaded part) should be approximately between ",
-				frame_gear_clearance + cyl_visible + cyl_bearing + screw_bearing + 2,
+				arm_thickness + cyl_visible + cyl_bearing + screw_bearing + 2,
 				" and ",
-				frame_body_clearance + cyl_visible + cyl_bearing + screw_bearing + 1, " mm");
+				arm_thickness + cyl_visible + cyl_bearing + screw_bearing + s_gear_h+1, " mm");
 		_PRINT("**** >> Tuning the length is possible with the 'frame_arm_clearance' parameter");
 		_PRINT("**** screw thread metric is M", arm_screw_dia);
 		if (! cyl_bearing && ! screw_bearing) {
