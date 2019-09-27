@@ -63,7 +63,7 @@ To manage any kind of servos, choose your way:
 - To get a printed shaft, buy a bunch of 5mm internal diameter. i.e:
   - MR85ZZ (5x8x2.5)
 
-##### STLs directory
+### STLs directory
 
 To ease the process, this directory provides multiple automatically generated STLs in some configurations:
 - hollow / solid frame
@@ -72,7 +72,7 @@ To ease the process, this directory provides multiple automatically generated ST
 The configuration file is provided for each generated stl.
 The bearing size is chosen for the best case scenario per servo: screw as the bearing shaft.
 
-##### Openscad feedback
+### Openscad feedback
 
 The scad file is providing you information feedback on the screw/bearing.
 Like this one:
@@ -97,7 +97,7 @@ ECHO: "**** screw thread metric is M3"
 ECHO: "******************"
 ```
 
-### Usage
+##### Usage
 
 - Install OpenScad
 - Launch openscad on servo-frame.scad
@@ -107,7 +107,7 @@ ECHO: "******************"
 
 And as always, with or without frame, wing servos must use a thread-locking fluid for the arm screw.
 
-### Printing
+##### Printing
 
 100% infill, ABS or Nylon material. Small layer printing is better.
 On a Ultimaker2, ~ one servo frame per hour in good quality (layer 0.1mm).
