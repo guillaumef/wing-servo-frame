@@ -2,9 +2,9 @@
 
 Wing servo frame - fully parametric - arms/bearing - servo database
 
-<img src="https://github.com/guillaumef/wing-servo-frame/blob/master/assembly/p01-assembly.jpg" width="500" alt="wing servo frame" align="center" />
-
-<img src="https://github.com/guillaumef/wing-servo-frame/blob/master/assembly/p06-assembly.jpg" width="500" alt="wing servo frame" align="center" />
+<img src="https://github.com/guillaumef/wing-servo-frame/blob/master/assembly/p01-assembly.jpg" width="300" alt="wing servo frame" align="center" /><img src="https://github.com/guillaumef/wing-servo-frame/blob/master/assembly/p06-assembly.jpg" width="300" alt="wing servo frame" align="center" />
+[![Watch the video](https://img.youtube.com/vi/2ph3OZgdkxs/hqdefault.jpg)](https://youtu.be/2ph3OZgdkxs)
+[![Watch the video](https://img.youtube.com/vi/XQHXTqi7j4g/hqdefault.jpg)](https://youtu.be/XQHXTqi7j4g)
 
 <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-X10-MINI-HV/hollow_bearingLR_2.5x6x2.6.gif" width="300" alt="KST X10 Mini HV frame" />
 
