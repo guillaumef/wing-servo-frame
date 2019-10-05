@@ -329,7 +329,7 @@ module servo_ear_solid( masky=0, issupport=0 ) {
 			/* no z-axis locking - adding a flat surface */
 			if (_ear_support_screw == 0) {
 				translate([0,-s_ear_w/2,s_t/2])
-					cube([s_ear_w*2,s_ear_w,s_t],center=true);
+					cube([s_ear_w*2,s_ear_w+frame_extra_width,s_t],center=true);
 			}
 		}
 	}
@@ -361,17 +361,36 @@ module servo_ear_solid( masky=0, issupport=0 ) {
 	}
 }
 
+
+module servo_cover_hole_mask() {
+	if (_ear_support_screw == 0 && z_axis_servo_cover) {
+		translate([(s_w+s_ear_w+frame_extra_width/2)/2, s_ear_w,0])
+			cylinder(r=.8,h=100,center=true);
+		translate([-(s_w+s_ear_w+frame_extra_width/2)/2, s_ear_w,0])
+			cylinder(r=.8,h=100,center=true);
+		translate([0,-(s_h+s_ear_w+frame_extra_width/2)/2,0])
+			cylinder(r=.8,h=100,center=true);
+	}
+}
+
 module servo_cover() {
 	if (_ear_support_screw == 0 && z_axis_servo_cover) {
-		translate([0,-s_h/2-frame_extra_width-s_ear_w-1,-s_t/2]) {
-			linear_extrude(1)
-				polygon([
-						[-s_w/2-s_ear_w,-s_ear_w*2], [-s_w/2-s_ear_w,0],
-						[s_w/2+s_ear_w,0], [s_w/2+s_ear_w,-s_ear_w*2],
-						[s_ear_w,-s_h_ear-s_ear_w],
-						[-s_ear_w,-s_h_ear-s_ear_w]
-				]);
+		translate([0,-s_h/2-frame_extra_width-s_ear_w*3-1,-s_t/2])
+		difference() {
+			translate([0,s_ear_w*2,0])
+			{
+				xmax = (s_w+frame_extra_width)/2+s_ear_w;
+				ymax = (s_h+frame_extra_width)/2+s_ear_w+s_ear_w*2;
+				linear_extrude(1)
+					polygon([
+							[-xmax,-s_ear_w*2], [-xmax,0],
+							[xmax,0], [xmax,-s_ear_w*2],
+							[s_ear_w,-ymax],
+							[-s_ear_w,-ymax]
+					]);
 
+			}
+			servo_cover_hole_mask();
 		}
 	}
 }
@@ -716,6 +735,7 @@ module servo_frame() {
 	difference() {
 		frame_w_ear_solid();
 		servo_solid_mask();
+		servo_cover_hole_mask();
 	}
 }
 
