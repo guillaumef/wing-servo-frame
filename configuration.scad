@@ -4,7 +4,7 @@
  *
  */
 
-servo_id	= [ 1 , 0 ];   /* Brand,Servo  - list in servo-frame.scad */
+servo_id	= [ 1 , 3 ];   /* Brand,Servo  - list in servo-frame.scad */
 
 bearing_id	= 2;           /* Bearing id   - list in servo-frame.scad */
 
