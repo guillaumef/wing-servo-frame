@@ -9,7 +9,7 @@ Videos (KST X08N, Bluebird BMS-125WV):
 [<img src="https://img.youtube.com/vi/2ph3OZgdkxs/hqdefault.jpg" width="30%">](https://youtu.be/2ph3OZgdkxs) [<img src="https://img.youtube.com/vi/XQHXTqi7j4g/hqdefault.jpg" width="30%">](https://youtu.be/XQHXTqi7j4g)
 
 
-[All animated gifs](blob/master/GIFSHOW.md)
+[All animated gifs](GIFSHOW.md)
 
 
 ### Project description
