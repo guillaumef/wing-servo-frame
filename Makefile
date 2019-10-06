@@ -128,9 +128,10 @@ GIFSHOW.md: $(GIFS)
 	   echo $$file >> list.tmp;		\
 	 done;					\
 	 NP="";					\
-	 for file in `sort list.tmp`; do	\
+	 for file in `perl -e 'print sort map { $$_ } <>' < list.tmp`; do	\
 	   N=`echo $$file | cut -d/ -f2`;	\
 	   if [ "$$NP" != "$$N" ]; then		\
+	     echo "" >> GIFSHOW.md;		\
 	     echo "" >> GIFSHOW.md;		\
 	     echo "## $$N" >> GIFSHOW.md;	\
 	     NP="$$N";				\
@@ -144,6 +145,7 @@ GIFSHOW.md: $(GIFS)
 	   fi;					\
 	   echo -n "<img src=\"https://github.com/guillaumef/wing-servo-frame/blob/master/$$file\" width=\"210\" alt=\"$$N frame\" /> " >> GIFSHOW.md;			\
 	 done;					\
+	 echo "" >> GIFSHOW.md;			\
 	 rm -f list.tmp;
 
 cleanstl:
