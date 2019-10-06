@@ -25,8 +25,6 @@ syncdoc:
 	 done;
 	@mv README.md.tmp README.md
 
-
-
 ### Gen configurations and parallelize openscad ... CPU burn
 stls: syncdoc stlconfs
 	@make -j5 stlfiles
@@ -92,10 +90,11 @@ stlconfs:
 	 done;
 
 CONFS = $(wildcard stls/*/*.configuration.scad)
-TODO = $(patsubst %.configuration.scad, %.stl, $(CONFS))
+STLS = $(patsubst %.configuration.scad, %.stl, $(CONFS))
 GIFS = $(patsubst %.configuration.scad, %.gif, $(CONFS))
 
-stlfiles: $(TODO) $(GIFS)
+stlfiles: $(STLS) $(GIFS) GIFSHOW.md
+
 
 %.stl: %.configuration.scad servo-frame.scad
 	@SRC=`echo "$@" | sed -e 's/stl$$/scad/'`; 				\
@@ -122,6 +121,30 @@ stlfiles: $(TODO) $(GIFS)
 	 done;									\
 	 convert '$@.*.png' -set delay 1x5 $@;					\
 	 rm -f $$SRC $@.*.png
+
+GIFSHOW.md: $(GIFS)
+	@rm -f list.tmp GIFSHOW.md; 		\
+	 for file in $(GIFS); do 		\
+	   echo $$file >> list.tmp;		\
+	 done;					\
+	 NP="";					\
+	 for file in `sort list.tmp`; do	\
+	   N=`echo $$file | cut -d/ -f2`;	\
+	   if [ "$$NP" != "$$N" ]; then		\
+	     echo "" >> GIFSHOW.md;		\
+	     echo "## $$N" >> GIFSHOW.md;	\
+	     NP="$$N";				\
+	     TP="";				\
+	   fi;					\
+	   T=`echo $$file | sed -e 's/.*\/\(hollow\|solid\).*/\1/'`; \
+	   if [ "$$TP" != "$$T" ]; then		\
+	     echo "" >> GIFSHOW.md;		\
+	     echo "#### $$T" >> GIFSHOW.md;	\
+	     TP="$$T";				\
+	   fi;					\
+	   echo "<img src=\"https://github.com/guillaumef/wing-servo-frame/blob/master/$$file\" width=\"180\" alt=\"$$N frame\" />" >> GIFSHOW.md;			\
+	 done;					\
+	 rm -f list.tmp;
 
 cleanstl:
 	@rm -f stls/*/*.stl
