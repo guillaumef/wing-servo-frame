@@ -142,7 +142,7 @@ GIFSHOW.md: $(GIFS)
 	     echo "#### $$T" >> GIFSHOW.md;	\
 	     TP="$$T";				\
 	   fi;					\
-	   echo -n "<img src=\"https://github.com/guillaumef/wing-servo-frame/blob/master/$$file\" width=\"190\" alt=\"$$N frame\" /> " >> GIFSHOW.md;			\
+	   echo -n "<img src=\"https://github.com/guillaumef/wing-servo-frame/blob/master/$$file\" width=\"210\" alt=\"$$N frame\" /> " >> GIFSHOW.md;			\
 	 done;					\
 	 rm -f list.tmp;
 
