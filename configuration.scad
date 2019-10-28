@@ -38,8 +38,8 @@ arm_thickness		= .5;	/* It is the added thickness of the servo arm between the
 				 * With plastic arm, often low thickness, like .5 ~ 1 mm
 				 * With aluminium arm, often higher thickness, like 1 ~ 2.5 mm
 				 *
-				 * If you don't know, take a secure value of 1mm so you will be
-				 * able to trim the cone part if it is too big.
+				 * If you don't know, take a secure value of .5mm so you will be
+				 * able to trim/sand down the cone part if it is too big.
 				 *
 				 * You have to consider the servo arm height part which is covering
 				 * the screw head and add it to the "frame_arm_clearance".
