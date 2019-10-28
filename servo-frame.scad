@@ -188,12 +188,9 @@ if (_proc == 1) {
 	_ERR("end");
 }
 
-if (version_num() > 20180101)
-	assert( servo, "MISSING SERVO DEFINITION");
-else {
-	if (! servo) echo("!!!! MISSING SERVO DEFINITION !!!!");
+if (! servo) {
+	_ERR( "Missing servo definition !");
 }
-
 
 legformat		= servo[0];
 s_h			= servo[1] 	+ .3;
@@ -402,7 +399,7 @@ module servo_cover() {
 
 module servo_ear_support_screw_solid() {
 	if (legformat == 1 && _ear_support_screw) {
-		translate([s_w/2, -s_t-s_h/2-s_ear_w-frame_extra_width - 1, -s_t/2]) {
+		translate([ -s_h, -s_t-s_h/2-s_ear_w-frame_extra_width - 1, -s_t/2]) {
 			difference() {
 				linear_extrude(s_ear_w) polygon([
 						[0,0],[0,s_t*.4],
