@@ -4,7 +4,7 @@
  *
  */
 
-servo_id	= [ 1 , 3 ];   /* Brand,Servo  - list in servo-frame.scad */
+servo_id	= [ 1 , 0 ];   /* Brand,Servo  - list in servo-frame.scad */
 
 bearing_id	= 2;           /* Bearing id   - list in servo-frame.scad */
 
@@ -32,12 +32,13 @@ z_axis_servo_cover	= 1;	/* with ear_support_screw == 0, make a servo cover */
 
 /* Servo arm properties */
 
-arm_thickness		= 2;	/* It is the added thickness of the servo arm between the
-				 * arm screw head (top of the threaded part) and the servo gear !
-				 * With plastic arm, it is often low, like .5 ~ 1 mm
-				 * With aluminium arm, it is bigger, like 1 ~ 2.5 mm
+arm_thickness		= .5;	/* It is the added thickness of the servo arm between the
+				 * arm screw head (top of the threaded part) and the servo gear.
 				 *
-				 * If you don't know, take a secure value of 2mm so you will be
+				 * With plastic arm, often low thickness, like .5 ~ 1 mm
+				 * With aluminium arm, often higher thickness, like 1 ~ 2.5 mm
+				 *
+				 * If you don't know, take a secure value of 1mm so you will be
 				 * able to trim the cone part if it is too big.
 				 *
 				 * You have to consider the servo arm height part which is covering
@@ -79,7 +80,7 @@ frame_arm_clearance	= 6;    /* clearance between the servo arm top (arm screw ho
 				 * the arm screw length needed is displayed.
 				 */
 
-frame_mode_light	= 0;	/* 0: solid frame
+frame_mode_light	= 1;	/* 0: solid frame
 				 * 1: make holes in frame: lighter and probably enhance gluing
 				 */
 
