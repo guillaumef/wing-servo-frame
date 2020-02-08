@@ -30,6 +30,19 @@ Videos (KST X08N, Bluebird BMS-125WV):
 - stls : some auto-generated STLs for each servo in the KB (in some configurations)
 - assembly : pictures and video of the assembly
 
+### Usage
+
+You need openscad and a text editor.
+
+```
+git clone https://github.com/guillaumef/wing-servo-frame.git
+```
+
+- Launch openscad on servo-frame.scad
+- Edit the configuration.scad file to fit your needs (openscad preview can be a bit tricked by the complexity, use F6 to render the final version if necessary)
+- Generate the STL
+- Print...
+
 ### Bearing and screw
 
 Both are easy to find, portable and far more cost-effective than commercial products and
@@ -101,20 +114,26 @@ ECHO: "**** screw thread metric is M3"
 ECHO: "******************"
 ```
 
-##### Usage
-
-- Install OpenScad
-- Launch openscad on servo-frame.scad
-- Edit the configuration.scad file to fit your needs (openscad preview can be a bit tricked by the complexity, use F6 to render the final version if necessary)
-- Generate the STL
-- Print...
-
-And as always, with or without frame, wing servos must use a thread-locking fluid for the arm screw.
-
 ##### Printing
 
 100% infill, ABS or Nylon material. Small layer printing is better.
 On a Ultimaker2, ~ one servo frame per hour in good quality (layer 0.1mm).
+
+### Miscellaneous
+
+- on carbon/fiberglass, use coarse grit sandpaper to roughen up the surfaces and
+clean with acetone (NEVER on ABS)
+- use a thread-locking fluid for the arm screw.
+- for wings, add a strap (1-2mm Fiberglass, carbon) between the wing
+top skin and the servo/frame. I quote the "Aeroic Schwing instructions":
+This all ensures a ridgedly held servo. Servos that pop off do so because of flex in
+the skins. Doing it this way there’s a lot of gluing area and no flex so the servo
+cannot pop off. A weak glue joint with an unprepared servo is perfectly adequate.
+The servo is held on the top skin, bottom skin and the head is held by the bearing
+housing which itself is bonded to both skins! To remove just cut the strap, unbolt
+the shaft and twist the servo. It pops out clean! But most of the time it may be you
+just need to replace the arm. Then it’s even easier as you just unbolt the shaft and
+leave the servo in situ.
 
 ### Servo database
 
