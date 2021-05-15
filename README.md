@@ -2,6 +2,8 @@
 
 Wing servo frame - fully parametric - arms/bearing - servo database
 
+<img src="https://github.com/guillaumef/wing-servo-frame/blob/master/real/kingmax-cls0911w/pix03.jpg" width="300" alt="servo frame, servorahmen, Kingmax cls0911w, KST x10" align="center" />
+
 <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/assembly/p01-assembly.jpg" width="300" alt="wing servo frame" align="center" /><img src="https://github.com/guillaumef/wing-servo-frame/blob/master/assembly/p06-assembly.jpg" width="300" alt="wing servo frame" align="center" />
 
 Videos (KST X08N, Bluebird BMS-125WV):
@@ -164,3 +166,5 @@ Servo list:
 - Emax ES3352
 - Emax ES08MDII
 - TowerPro MG90D 15g
+- KingMax CLS0911W
+- KingMax CLS0612W

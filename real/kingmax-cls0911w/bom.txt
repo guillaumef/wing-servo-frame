@@ -1,0 +1,15 @@
+
+1 x KingMax CLS0911w
+   ...
+
+1 x 682XZZ - aliexpress
+1 x M2.5*12 - aliexpress
+2 x mini screws for wood/abs - classic micro servo screws
+3 x servo screws - or cut the one provided with the cls0911w
+
+
+
+--- Like KST X10 or many others using M2.3 screw (nearly proprietary).
+The simpliest way is a M2.5 tap set (flat tip or make it flatter),
+you get a strong M2.5 with 3.5mm depth.
+
