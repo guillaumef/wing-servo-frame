@@ -119,6 +119,20 @@
 #### solid
 <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-X12-508-HV/solid_bearingLR_2.5x6x2.6.gif" width="210" alt="KST-X12-508-HV frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-X12-508-HV/solid_bearingLeft_2.5x6x2.6.gif" width="210" alt="KST-X12-508-HV frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-X12-508-HV/solid_bearingRight_2.5x6x2.6.gif" width="210" alt="KST-X12-508-HV frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-X12-508-HV/solid_nobearing.gif" width="210" alt="KST-X12-508-HV frame" /> 
 
+## KingMax-CLS0612W
+
+#### hollow
+<img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KingMax-CLS0612W/hollow_bearingLR_2.5x6x2.6.gif" width="210" alt="KingMax-CLS0612W frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KingMax-CLS0612W/hollow_bearingLeft_2.5x6x2.6.gif" width="210" alt="KingMax-CLS0612W frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KingMax-CLS0612W/hollow_bearingRight_2.5x6x2.6.gif" width="210" alt="KingMax-CLS0612W frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KingMax-CLS0612W/hollow_nobearing.gif" width="210" alt="KingMax-CLS0612W frame" /> 
+#### solid
+<img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KingMax-CLS0612W/solid_bearingLR_2.5x6x2.6.gif" width="210" alt="KingMax-CLS0612W frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KingMax-CLS0612W/solid_bearingLeft_2.5x6x2.6.gif" width="210" alt="KingMax-CLS0612W frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KingMax-CLS0612W/solid_bearingRight_2.5x6x2.6.gif" width="210" alt="KingMax-CLS0612W frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KingMax-CLS0612W/solid_nobearing.gif" width="210" alt="KingMax-CLS0612W frame" /> 
+
+## KingMax-CLS0911W
+
+#### hollow
+<img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KingMax-CLS0911W/hollow_bearingLR_2.5x6x2.6.gif" width="210" alt="KingMax-CLS0911W frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KingMax-CLS0911W/hollow_bearingLeft_2.5x6x2.6.gif" width="210" alt="KingMax-CLS0911W frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KingMax-CLS0911W/hollow_bearingRight_2.5x6x2.6.gif" width="210" alt="KingMax-CLS0911W frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KingMax-CLS0911W/hollow_nobearing.gif" width="210" alt="KingMax-CLS0911W frame" /> 
+#### solid
+<img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KingMax-CLS0911W/solid_bearingLR_2.5x6x2.6.gif" width="210" alt="KingMax-CLS0911W frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KingMax-CLS0911W/solid_bearingLeft_2.5x6x2.6.gif" width="210" alt="KingMax-CLS0911W frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KingMax-CLS0911W/solid_bearingRight_2.5x6x2.6.gif" width="210" alt="KingMax-CLS0911W frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KingMax-CLS0911W/solid_nobearing.gif" width="210" alt="KingMax-CLS0911W frame" /> 
+
 ## MKS-DS6100
 
 #### hollow

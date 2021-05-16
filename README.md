@@ -47,19 +47,21 @@ git clone https://github.com/guillaumef/wing-servo-frame.git
 
 ### Bearing and screw
 
+If you want a bearing and axial guidance, it is trivial.
 Both are easy to find, portable and far more cost-effective than commercial products and
 proprietary arm screws.
 
-The trivial constraint:
-screw diameter (servo arm screw) must be inferior or equal to the bearing internal diameter.
+I am assembling at least one plane every year, I provisioned mixed bearing diameters and
+screws for a few bucks.
+
 
 ##### Screw
 
 The arm screw is replaced with a longer one.
 
 Nearly all servo arm screws are M2,M2.5,M3.
-A dissident is the KST X12, with M2.3 screw (nearly proprietary).
-For this one, the simpliest way is a M2.5 tap set (flat tip or make it flatter), you get a strong M2.5 with 3.5mm depth.
+The dissidents are the KST X series, KingMax CLS series, ... with M2.3 screw (hard to find).
+Simply change it to M2.5 with a tap set (cost $5). This way, you get a strong M2.5 with 3.5mm depth.
 You need M2,M2.5,M3 screws with a minimum length of 15mm and you are good to go for any servos.
 
 ##### Bearing
