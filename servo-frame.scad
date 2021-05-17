@@ -351,10 +351,10 @@ module servo_ear_solid( masky=0, issupport=0 ) {
 			rotate([90,0,0])
 			cube([s_w+s_ear_w*2,s_ear_t+masky, s_ear_h], center=true);
 		if (issupport) {
-			translate([ 0, s_h_ear - s_h/2 + s_ear_h/2, -(s_t/2-s_ear_t)/2])
+			translate([ 0, s_h_ear - s_h/2 + s_ear_h/2, (s_ear_t-s_t)/4])
 				rotate([90,0,0])
 				cube([s_w+s_ear_w*2+surround_spacer,
-						s_t/2 - s_ear_t,
+						(s_t+s_ear_t)/2,
 						s_ear_h+surround_spacer], center=true);
 		}
 		if (legformat==3) {
@@ -362,10 +362,10 @@ module servo_ear_solid( masky=0, issupport=0 ) {
 				rotate([90,0,90])
 				cube([s_ear_w*2,s_ear_t+masky, s_ear_h_third], center=true);
 			if (issupport) {
-				translate([0, -s_h/2 - s_ear_w/2, -(s_t/2-s_ear_t)/2])
+				translate([0, -s_h/2 - s_ear_w/2, (s_ear_t-s_t)/4])
 					rotate([90,0,90])
 					cube([s_ear_w+surround_spacer,
-							s_t/2 - s_ear_t,
+							(s_t+s_ear_t)/2,
 							s_ear_h_third+surround_spacer], center=true);
 			}
 		}
