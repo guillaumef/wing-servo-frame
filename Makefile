@@ -1,4 +1,7 @@
 
+OPENSCAD=openscad
+#OPENSCAD=openscad-nightly
+
 help:
 	@echo "  - stls"
 	@echo "  - list"
@@ -39,7 +42,7 @@ stlconfs:
 		mkdir -p $$DIR_TG;					\
 		\
 		echo "Get bearing info";					\
-		openscad -D _servo_id_brand=$$SERV_BRAND 			\
+		${OPENSCAD} -D _servo_id_brand=$$SERV_BRAND 			\
 			-D _servo_id_servo=$$SERV_SERVO				\
 			-D _proc=1						\
 			-o bearing.echo						\
@@ -101,9 +104,9 @@ stlfiles: $(STLS) $(GIFS) GIFSHOW.md
 	 ECHO=`echo "$@" | sed -e 's/stl$$/echo/'`;				\
 	 BASENAME=`basename "$<"`;						\
 	 sed -E "s/<configuration.scad>/<$$BASENAME>/" servo-frame.scad	> "$$SRC";	\
-	 openscad -o "$$ECHO" "$$SRC";						\
-	 echo "openscad -o \"$@\" \"$$SRC\""; 					\
-	 openscad -o "$@" "$$SRC";						\
+	 ${OPENSCAD} -o "$$ECHO" "$$SRC";						\
+	 echo "${OPENSCAD} -o \"$@\" \"$$SRC\""; 					\
+	 ${OPENSCAD} -o "$@" "$$SRC";						\
 	 rm -f "$$SRC"
 
 %.gif: %.stl
@@ -115,7 +118,7 @@ stlfiles: $(STLS) $(GIFS) GIFSHOW.md
 	   IDX="$$i"; 								\
 	   if [ "$$IDX" -lt 10 ]; then IDX="00$$IDX";				\
 	   elif [ "$$IDX" -lt 100 ]; then IDX="0$$IDX"; fi;			\
-	   openscad -o $@.$$IDX.png -D t=$$i --camera 0,0,0,55,0,0,250 		\
+	   ${OPENSCAD} -o $@.$$IDX.png -D t=$$i --camera 0,0,0,55,0,0,250 	\
 	    --imgsize=800,600 $$SRC > /dev/null 2>&1;				\
 	   i=$$(($$i+10));							\
 	 done;									\

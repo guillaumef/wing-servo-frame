@@ -56,6 +56,41 @@
 #### solid
 <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/Emax-ES3352/solid_bearingLR_2x5x2.5.gif" width="210" alt="Emax-ES3352 frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/Emax-ES3352/solid_bearingLeft_2x5x2.5.gif" width="210" alt="Emax-ES3352 frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/Emax-ES3352/solid_bearingRight_2x5x2.5.gif" width="210" alt="Emax-ES3352 frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/Emax-ES3352/solid_nobearing.gif" width="210" alt="Emax-ES3352 frame" /> 
 
+## KST-HS08A-HV
+
+#### hollow
+<img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-HS08A-HV/hollow_bearingLR_2x5x2.5.gif" width="210" alt="KST-HS08A-HV frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-HS08A-HV/hollow_bearingLeft_2x5x2.5.gif" width="210" alt="KST-HS08A-HV frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-HS08A-HV/hollow_bearingRight_2x5x2.5.gif" width="210" alt="KST-HS08A-HV frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-HS08A-HV/hollow_nobearing.gif" width="210" alt="KST-HS08A-HV frame" /> 
+#### solid
+<img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-HS08A-HV/solid_bearingLR_2x5x2.5.gif" width="210" alt="KST-HS08A-HV frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-HS08A-HV/solid_bearingLeft_2x5x2.5.gif" width="210" alt="KST-HS08A-HV frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-HS08A-HV/solid_bearingRight_2x5x2.5.gif" width="210" alt="KST-HS08A-HV frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-HS08A-HV/solid_nobearing.gif" width="210" alt="KST-HS08A-HV frame" /> 
+
+## KST-HS08B-HV
+
+#### hollow
+<img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-HS08B-HV/hollow_bearingLR_2x5x2.5.gif" width="210" alt="KST-HS08B-HV frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-HS08B-HV/hollow_bearingLeft_2x5x2.5.gif" width="210" alt="KST-HS08B-HV frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-HS08B-HV/hollow_bearingRight_2x5x2.5.gif" width="210" alt="KST-HS08B-HV frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-HS08B-HV/hollow_nobearing.gif" width="210" alt="KST-HS08B-HV frame" /> 
+#### solid
+<img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-HS08B-HV/solid_bearingLR_2x5x2.5.gif" width="210" alt="KST-HS08B-HV frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-HS08B-HV/solid_bearingLeft_2x5x2.5.gif" width="210" alt="KST-HS08B-HV frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-HS08B-HV/solid_bearingRight_2x5x2.5.gif" width="210" alt="KST-HS08B-HV frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-HS08B-HV/solid_nobearing.gif" width="210" alt="KST-HS08B-HV frame" /> 
+
+## KST-X06-HV
+
+#### hollow
+<img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-X06-HV/hollow_bearingLR_2x5x2.5.gif" width="210" alt="KST-X06-HV frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-X06-HV/hollow_bearingLeft_2x5x2.5.gif" width="210" alt="KST-X06-HV frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-X06-HV/hollow_bearingRight_2x5x2.5.gif" width="210" alt="KST-X06-HV frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-X06-HV/hollow_nobearing.gif" width="210" alt="KST-X06-HV frame" /> 
+#### solid
+<img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-X06-HV/solid_bearingLR_2x5x2.5.gif" width="210" alt="KST-X06-HV frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-X06-HV/solid_bearingLeft_2x5x2.5.gif" width="210" alt="KST-X06-HV frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-X06-HV/solid_bearingRight_2x5x2.5.gif" width="210" alt="KST-X06-HV frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-X06-HV/solid_nobearing.gif" width="210" alt="KST-X06-HV frame" /> 
+
+## KST-X06H-HV
+
+#### hollow
+<img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-X06H-HV/hollow_bearingLR_2x5x2.5.gif" width="210" alt="KST-X06H-HV frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-X06H-HV/hollow_bearingLeft_2x5x2.5.gif" width="210" alt="KST-X06H-HV frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-X06H-HV/hollow_bearingRight_2x5x2.5.gif" width="210" alt="KST-X06H-HV frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-X06H-HV/hollow_nobearing.gif" width="210" alt="KST-X06H-HV frame" /> 
+#### solid
+<img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-X06H-HV/solid_bearingLR_2x5x2.5.gif" width="210" alt="KST-X06H-HV frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-X06H-HV/solid_bearingLeft_2x5x2.5.gif" width="210" alt="KST-X06H-HV frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-X06H-HV/solid_bearingRight_2x5x2.5.gif" width="210" alt="KST-X06H-HV frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-X06H-HV/solid_nobearing.gif" width="210" alt="KST-X06H-HV frame" /> 
+
+## KST-X06N-HV
+
+#### hollow
+<img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-X06N-HV/hollow_bearingLR_2x5x2.5.gif" width="210" alt="KST-X06N-HV frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-X06N-HV/hollow_bearingLeft_2x5x2.5.gif" width="210" alt="KST-X06N-HV frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-X06N-HV/hollow_bearingRight_2x5x2.5.gif" width="210" alt="KST-X06N-HV frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-X06N-HV/hollow_nobearing.gif" width="210" alt="KST-X06N-HV frame" /> 
+#### solid
+<img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-X06N-HV/solid_bearingLR_2x5x2.5.gif" width="210" alt="KST-X06N-HV frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-X06N-HV/solid_bearingLeft_2x5x2.5.gif" width="210" alt="KST-X06N-HV frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-X06N-HV/solid_bearingRight_2x5x2.5.gif" width="210" alt="KST-X06N-HV frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-X06N-HV/solid_nobearing.gif" width="210" alt="KST-X06N-HV frame" /> 
+
 ## KST-X08-HV
 
 #### hollow

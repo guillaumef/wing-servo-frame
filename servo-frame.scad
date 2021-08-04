@@ -49,7 +49,7 @@ include <configuration.scad>
     - J: ear width bottom (only applicable to vertical_ears_three_ears - 0 fallback to 'I')
     - K: ear hole size (Notch mode: negative value, Hole mode: positive value)
     - L: cable position (servo bottom to cable bottom)
-    - M: gear screw diameter (required is 'with_bearing')
+    - M: gear screw diameter (required if 'with_bearing')
  
 
     Set servo_brand/servo_id the index of the servo needed.
@@ -103,11 +103,21 @@ servos_kb	= [
 /* Servo #2,5   - KST X08H HV                                                     */
  ,[ 2,   21, 23.5,    8, 14.9,  6.1,  2.9,    1,    3,    4,    0,  1.6,    0,    2 ]
 /* Servo #2,6   - KST X08N HV                                                     */
- ,[ 0,   21, 23.5,    8, 14.9, 6.13,  2.9,    1,    3,    0,    0,    2,    0,    2 ]
+ ,[ 0,   21, 23.5,    8, 14.9, 6.13,  2.9,    0,    0,    0,    0,    0,    0,    2 ]
 /* Servo #2,7   - KST X08 Plus HV                                                 */
  ,[ 1, 27.3, 23.5,    8,   21, 6.13,  2.9,    1,    3,    0,    0,    2,    0,    2 ]
 /* Servo #2,8   - KST X08H Plus HV                                                */
  ,[ 2, 27.3, 23.5,    8,   21,  6.1,  2.9,    1,    3,    4,    0,  1.6,    0,    2 ]
+/* Servo #2,9   - KST X06 HV                                                      */
+ ,[ 1, 16.6,   20,    7, 11.9,   5,   2.7,    1,    4,    0,    0,    2,    0,    2 ]
+/* Servo #2,10   - KST X06H HV                                                    */
+ ,[ 2, 16.6,   20,    7,  8.9,   5,   2.7,    1,    3,    4,    0,  1.6,    0,    2 ]
+/* Servo #2,11   - KST X06N HV                                                    */
+ ,[ 0, 16.6,   20,    7, 11.9,   5,   2.7,    0,    0,    0,    0,    0,    0,    2 ]
+/* Servo #2,12   - KST HS08B HV                                                    */
+ ,[ 1, 25.3, 23.5,    8,   19,6.11,   3.2,    1,    3,    0,    0,    2,    0,    2 ]
+/* Servo #2,13   - KST HS08A HV                                                    */
+ ,[ 2, 25.3, 23.5,    8,   19,6.11,   3.2,    1,    3,    4,    0,  1.6,    0,    2 ]
 ]
 
 /*       A     B     C     D     E     F     G     H     I     J     K     L     M */
