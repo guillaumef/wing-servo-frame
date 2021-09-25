@@ -175,3 +175,6 @@ Servo list:
 - TowerPro MG90D 15g
 - KingMax CLS0911W
 - KingMax CLS0612W
+- KingMax C507
+- GDW DS1906-A
+- GDW DS1906-B

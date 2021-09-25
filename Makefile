@@ -30,7 +30,7 @@ syncdoc:
 
 ### Gen configurations and parallelize openscad ... CPU burn
 stls: syncdoc stlconfs
-	@make -j5 stlfiles
+	@make -j8 stlfiles
 
 stlconfs:
 	@for tg in `grep 'Servo #' servo-frame.scad | sed -e 's/.*#//' | sed -e 's/ *- */ /' | sed -e 's/[\/|(*].*//' | sed -e 's/  */ /' | sed -e 's/ *$$//' | sed -e 's/ /,/g'`; do \

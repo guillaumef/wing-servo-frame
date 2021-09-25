@@ -56,6 +56,20 @@
 #### solid
 <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/Emax-ES3352/solid_bearingLR_2x5x2.5.gif" width="210" alt="Emax-ES3352 frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/Emax-ES3352/solid_bearingLeft_2x5x2.5.gif" width="210" alt="Emax-ES3352 frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/Emax-ES3352/solid_bearingRight_2x5x2.5.gif" width="210" alt="Emax-ES3352 frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/Emax-ES3352/solid_nobearing.gif" width="210" alt="Emax-ES3352 frame" /> 
 
+## GDW-DS1906-A
+
+#### hollow
+<img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/GDW-DS1906-A/hollow_bearingLR_2x5x2.5.gif" width="210" alt="GDW-DS1906-A frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/GDW-DS1906-A/hollow_bearingLeft_2x5x2.5.gif" width="210" alt="GDW-DS1906-A frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/GDW-DS1906-A/hollow_bearingRight_2x5x2.5.gif" width="210" alt="GDW-DS1906-A frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/GDW-DS1906-A/hollow_nobearing.gif" width="210" alt="GDW-DS1906-A frame" /> 
+#### solid
+<img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/GDW-DS1906-A/solid_bearingLR_2x5x2.5.gif" width="210" alt="GDW-DS1906-A frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/GDW-DS1906-A/solid_bearingLeft_2x5x2.5.gif" width="210" alt="GDW-DS1906-A frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/GDW-DS1906-A/solid_bearingRight_2x5x2.5.gif" width="210" alt="GDW-DS1906-A frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/GDW-DS1906-A/solid_nobearing.gif" width="210" alt="GDW-DS1906-A frame" /> 
+
+## GDW-DS1906-B
+
+#### hollow
+<img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/GDW-DS1906-B/hollow_bearingLR_2x5x2.5.gif" width="210" alt="GDW-DS1906-B frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/GDW-DS1906-B/hollow_bearingLeft_2x5x2.5.gif" width="210" alt="GDW-DS1906-B frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/GDW-DS1906-B/hollow_bearingRight_2x5x2.5.gif" width="210" alt="GDW-DS1906-B frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/GDW-DS1906-B/hollow_nobearing.gif" width="210" alt="GDW-DS1906-B frame" /> 
+#### solid
+<img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/GDW-DS1906-B/solid_bearingLR_2x5x2.5.gif" width="210" alt="GDW-DS1906-B frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/GDW-DS1906-B/solid_bearingLeft_2x5x2.5.gif" width="210" alt="GDW-DS1906-B frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/GDW-DS1906-B/solid_bearingRight_2x5x2.5.gif" width="210" alt="GDW-DS1906-B frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/GDW-DS1906-B/solid_nobearing.gif" width="210" alt="GDW-DS1906-B frame" /> 
+
 ## KST-HS08A-HV
 
 #### hollow
@@ -153,6 +167,13 @@
 <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-X12-508-HV/hollow_bearingLR_2.5x6x2.6.gif" width="210" alt="KST-X12-508-HV frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-X12-508-HV/hollow_bearingLeft_2.5x6x2.6.gif" width="210" alt="KST-X12-508-HV frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-X12-508-HV/hollow_bearingRight_2.5x6x2.6.gif" width="210" alt="KST-X12-508-HV frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-X12-508-HV/hollow_nobearing.gif" width="210" alt="KST-X12-508-HV frame" /> 
 #### solid
 <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-X12-508-HV/solid_bearingLR_2.5x6x2.6.gif" width="210" alt="KST-X12-508-HV frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-X12-508-HV/solid_bearingLeft_2.5x6x2.6.gif" width="210" alt="KST-X12-508-HV frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-X12-508-HV/solid_bearingRight_2.5x6x2.6.gif" width="210" alt="KST-X12-508-HV frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KST-X12-508-HV/solid_nobearing.gif" width="210" alt="KST-X12-508-HV frame" /> 
+
+## KingMax-C507
+
+#### hollow
+<img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KingMax-C507/hollow_bearingLR_2x5x2.5.gif" width="210" alt="KingMax-C507 frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KingMax-C507/hollow_bearingLeft_2x5x2.5.gif" width="210" alt="KingMax-C507 frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KingMax-C507/hollow_bearingRight_2x5x2.5.gif" width="210" alt="KingMax-C507 frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KingMax-C507/hollow_nobearing.gif" width="210" alt="KingMax-C507 frame" /> 
+#### solid
+<img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KingMax-C507/solid_bearingLR_2x5x2.5.gif" width="210" alt="KingMax-C507 frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KingMax-C507/solid_bearingLeft_2x5x2.5.gif" width="210" alt="KingMax-C507 frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KingMax-C507/solid_bearingRight_2x5x2.5.gif" width="210" alt="KingMax-C507 frame" /> <img src="https://github.com/guillaumef/wing-servo-frame/blob/master/stls/KingMax-C507/solid_nobearing.gif" width="210" alt="KingMax-C507 frame" /> 
 
 ## KingMax-CLS0612W
 
