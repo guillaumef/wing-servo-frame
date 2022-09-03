@@ -93,11 +93,11 @@ with_bearing 		= 2; 	/* 0: no bearing
 				 */
 
 /* Boxed? */
-with_boxed		= 0;	/* 0: no box
+with_boxed		= 1;	/* 0: no box
 				 * 1: with box
 				 */
-boxed_w			= 50;
-boxed_l			= 50;
+boxed_w			= 52;
+boxed_l			= 52;
 boxed_h			= 20;
 boxed_thickness		= 2.0;
 

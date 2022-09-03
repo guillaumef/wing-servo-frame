@@ -46,7 +46,8 @@ include <configuration.scad>
     - G: ear thickness (if vertical_ears, it is still the thickness of the ear) 
     - H: ear width (in no_ear mode, you can use it in // of the frame_extra_width)
     - I: ear height (only applicable to vertical_ears - 0 fallback to ear width)
-    - J: ear width bottom (only applicable to vertical_ears_three_ears - 0 fallback to 'I')
+    - J: if (vertical_ears_three_ears) - ear width bottom
+         else                          - back notch height for external motor servo
     - K: ear hole size (Notch mode: negative value, Hole mode: positive value)
     - L: cable position (servo bottom to cable bottom)
     - M: gear screw diameter (required if 'with_bearing')
@@ -144,16 +145,16 @@ servos_kb	= [
 /* Servo #5,1   - KingMax CLS0612W                                                 */
  ,[ 3,   30,   30,   10,    22, 6.5,  3.2,  2.0,    6,    8, 10.0,    3,  8.5,  2.5 ]
 /* Servo #5,2   - KingMax C507                                                     */
- ,[ 2, 23.4, 23.5,    8,  15.1, 5.9,  2.7,  1.5,    3,  4.7,    0,  1.8,    0,    2 ]
+ ,[ 2, 23.4, 23.5,    8,  15.1, 5.9,  2.7,  1.5,    3,  4.7,  3.3,  1.8,    0,    2 ]
 ]
 
 /*       A     B     C     D     E     F     G     H     I     J     K     L     M */
 /* Brand #6 - GDW */
 ,[
 /* Servo #6,0   - GDW DS1906-A                                                     */
-  [ 2,  22.4, 23.5,   8,  14.4, 6.0,  3.2,    1,    3,    4,    0,  1.5,    0,    2 ]
+  [ 2,  23.5, 23.5,   8,  15.5, 5.4,  3.2,  1.1,    3,  3.8,  3.5,  1.5,    0,    1 ]
 /* Servo #6,1   - GDW DS1906-B                                                     */
- ,[ 1,  22.4, 23.5,   8,  14.4, 6.0,  3.2,    1,    3,    0,    0,  1.5,    0,    2 ]
+ ,[ 1,  23.5, 23.5,   8,  15.5, 5.4,  3.2,  1.1,    3,    0,    0,  1.5,    0,    1 ]
 
 ]
 ];
@@ -235,6 +236,7 @@ s_ear_t			= (legformat)?servo[7]	+ .1 : 0;
 s_ear_w			= (legformat)?servo[8]	+ .2 : 3;
 s_ear_h			= (servo[9]?servo[9]:servo[8]) + .2;
 s_ear_h_third		= (servo[10]?servo[10] + .2 : s_ear_h);
+
 s_ear_isnotch		= (servo[11]<0) ? 1 : 0;
 s_ear_hole_dia		= abs(servo[11]);
 s_cable_h		= servo[12];
@@ -407,7 +409,7 @@ module servo_cover_hole_mask() {
 
 module servo_cover() {
 	if (_ear_support_screw == 0 && z_axis_servo_cover) {
-		translate([0,-s_h/2-frame_extra_width-s_ear_w*3-1,-s_t/2])
+		translate([0,-s_h/2-frame_extra_width-s_ear_w*3-10,-s_t/2])
 		difference() {
 			translate([0,s_ear_w*2,0])
 			{
@@ -429,7 +431,7 @@ module servo_cover() {
 
 module servo_ear_support_screw_solid() {
 	if (legformat == 1 && _ear_support_screw) {
-		translate([ -s_h, -s_t-s_h/2-s_ear_w-frame_extra_width - 1, -s_t/2]) {
+		translate([ -s_h, -s_t-s_h/2-s_ear_w-frame_extra_width - 10, -s_t/2]) {
 			difference() {
 				linear_extrude(s_ear_w) polygon([
 						[0,0],[0,s_t*.4],
@@ -526,7 +528,7 @@ module servo_bearing_holder( issupport=0, locker=0 ) {
 				b_t_clearance = ((locker) ? 0.2:0);
 				translate([0,0,-b_t + b_t_clearance/2]) {
 					difference() {
-						translate([0,s_t/2 - 1.5,0]) cube([s_w*10,3,b_t-b_t_clearance],center=true);
+						translate([0,s_t/2 - 1.5,0]) cube([s_w,3,b_t-b_t_clearance],center=true);
 						scale([1,1.2,1]) /* also ovalized */
 							cylinder(r=b_ed/2, h=b_t+1, center=true);
 					}
@@ -661,16 +663,47 @@ module frame_solid() {
 
 	difference() {
 		arm_clearance = frame_body_clearance;
-		translate([     0,
-				arm_clearance/2,
-				-50 + frame_thickness - minkowski_rounded]) {
-			minkowski() {
-				cube([
-						s_w + (s_ear_w + extra_width) * 2,
-						s_h + (s_ear_w + extra_width)*2 + arm_clearance,
-						frame_thickness + 100 ],
-						center=true);
-				sphere( minkowski_rounded );
+		union() {
+			translate([     0,
+					arm_clearance/2,
+					-50 + frame_thickness - minkowski_rounded]) {
+				minkowski() {
+					cube([
+							s_w + (s_ear_w + extra_width) * 2,
+							s_h + (s_ear_w + extra_width)*2 + arm_clearance,
+							frame_thickness + 100 ],
+							center=true);
+					sphere( minkowski_rounded );
+				}
+			}
+
+			if (with_boxed) {
+				translate([     0,
+						arm_clearance/2,
+						boxed_h/2]) {
+					difference() {
+						minkowski() {
+							cube([
+									boxed_w - minkowski_rounded,
+									boxed_l - minkowski_rounded,
+									boxed_h +100 ],
+									center=true);
+							sphere( minkowski_rounded );
+						}
+						translate([0,0,100-boxed_h/2 + frame_thickness]) {
+							minkowski() {
+								cube([
+										boxed_w - minkowski_rounded - boxed_thickness*2,
+										boxed_l - minkowski_rounded - boxed_thickness*2,
+										200 - minkowski_rounded ],
+										center=true);
+								sphere( minkowski_rounded );
+							}
+						} 
+						translate([-500,-500,boxed_h/2])
+							cube([1000,1000,1000]);
+					}
+				}
 			}
 		}
 		translate([-500,-500,-1000])
@@ -703,7 +736,7 @@ module bearing_shaft_solid() {
 		screw_bearing = (arm_screw_dia == b_id) ? b_t : 0;
 		cyl_bearing_dia = b_id - 0.1;
 
-		translate([-s_w/2, s_t+s_h/2+frame_body_clearance+frame_extra_width + 1, -s_t/2])
+		translate([-s_w/2, s_t+s_h/2+frame_body_clearance+frame_extra_width + 10, -s_t/2])
 		difference() {
 			union() {
 				translate([ 0,0, cyl_visible/2 ])
@@ -753,7 +786,7 @@ module bearing_shaft_solid() {
 
 module bearing_lock_solid() {
 	if (with_bearing) {
-		translate([s_w/2, s_t+s_h/2+frame_body_clearance+frame_extra_width, -s_t/2])
+		translate([s_w/2, s_t+s_h/2+frame_body_clearance+frame_extra_width+10, -s_t/2])
 			rotate([90,0,0])
 			translate([-frame_body_clearance,-b_t/2-frame_body_clearance-s_h/2,-s_t/2])
 			intersection() {
@@ -763,12 +796,24 @@ module bearing_lock_solid() {
 	}
 }
 
+module servo_back_support_special() {
+	if (legformat<3 && s_ear_h_third) {
+		/* Special added notch to block servo with external motor */
+		notch_w = s_w - s_t*2 - 5;
+		if (notch_w>1) {
+			translate([0,s_ear_h_third/2 -s_h/2,0])
+				cube([ notch_w, s_ear_h_third, s_t ],center=true);
+		}
+	}
+}
+
 module servo_frame() {
 	difference() {
 		frame_w_ear_solid();
 		servo_solid_mask();
 		servo_cover_hole_mask();
 	}
+	servo_back_support_special();
 }
 
 module servo_frame_parts() {

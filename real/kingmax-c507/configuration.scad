@@ -4,9 +4,9 @@
  *
  */
 
-servo_id	= [ 1, 0 ];    /* Brand,Servo  - list in servo-frame.scad */
+servo_id	= [ 5 , 2 ];   /* Brand,Servo  - list in servo-frame.scad */
 
-bearing_id	= 2;           /* Bearing id   - list in servo-frame.scad */
+bearing_id	= 0;           /* Bearing id   - list in servo-frame.scad */
 
 
 /*
@@ -32,7 +32,7 @@ z_axis_servo_cover	= 1;	/* with ear_support_screw == 0, make a servo cover */
 
 /* Servo arm properties */
 
-arm_thickness		= 1.1;	/* It is the added thickness of the servo arm between the
+arm_thickness		= .5;	/* It is the added thickness of the servo arm between the
 				 * arm screw head (top of the threaded part) and the servo gear.
 				 *
 				 * With plastic arm, often low thickness, like .5 ~ 1 mm
@@ -45,7 +45,7 @@ arm_thickness		= 1.1;	/* It is the added thickness of the servo arm between the
 				 * the screw head and add it to the "frame_arm_clearance".
 				 */
 
-arm_screw_head_dia	= 5.5;	/* (needed if 'with_bearing')
+arm_screw_head_dia	= 3.8;	/* (needed if 'with_bearing')
 				 *
 				 * 2 cases:
 				 *
@@ -66,9 +66,9 @@ arm_screw_head_dia	= 5.5;	/* (needed if 'with_bearing')
 
 frame_thickness		= 1.5; 	/* thickness of the frame */
 
-frame_extra_width	= 3.0; 	/* extra width of the frame */
+frame_extra_width	= 4.0; 	/* extra width of the frame */
 
-frame_arm_clearance	= 6;    /* clearance between the servo arm top (arm screw hole)
+frame_arm_clearance	= 5;    /* clearance between the servo arm top (arm screw hole)
 				 * and the start of the servo frame top
 				 * (aka bearing support if 'with_bearing').
 				 *
@@ -100,6 +100,7 @@ boxed_w			= 50;
 boxed_l			= 50;
 boxed_h			= 20;
 boxed_thickness		= 2.0;
+
 
 /* MISC */
 

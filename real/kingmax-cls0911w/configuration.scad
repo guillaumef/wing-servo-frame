@@ -68,7 +68,7 @@ frame_thickness		= 1.5; 	/* thickness of the frame */
 
 frame_extra_width	= 1.5; 	/* extra width of the frame */
 
-frame_arm_clearance	= 3.3;  /* clearance between the servo arm top (arm screw hole)
+frame_arm_clearance	= 5.0;  /* clearance between the servo arm top (arm screw hole)
 				 * and the start of the servo frame top
 				 * (aka bearing support if 'with_bearing').
 				 *
@@ -91,6 +91,16 @@ with_bearing 		= 1; 	/* 0: no bearing
 				 * 2: With shaft bearing - Left
 				 * 3: With shaft bearing - Both - universal
 				 */
+
+/* Boxed? */
+with_boxed		= 0;	/* 0: no box
+				 * 1: with box
+				 */
+boxed_w			= 50;
+boxed_l			= 50;
+boxed_h			= 20;
+boxed_thickness		= 2.0;
+
 
 /* MISC */
 

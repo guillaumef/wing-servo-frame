@@ -23,6 +23,7 @@ Videos (KST X08N, Bluebird BMS-125WV):
 - for horizontal ears, manage ear notch, screws or both
 - many options (general thickness, arm clearance, frame round factor, mode light, ...)
 - no added height to the servo thickness
+- optional box (great for foam core wings)
 
 ### Directories/files
 
