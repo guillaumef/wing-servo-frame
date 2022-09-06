@@ -605,7 +605,7 @@ module servo_cable_solid(y=0) {
 	w = (legformat<2) ? 4 : 6;
 	t = (legformat<2) ? 6 : 4;
 	translate([0,-s_h/2+w/2 + s_cable_h,y/2]) {
-		cube([1000,w,t+y], center=true);
+		cube([s_w + (s_ear_w + frame_extra_width) * 2,w,t+y], center=true);
 	}
 }
 
@@ -699,7 +699,17 @@ module frame_solid() {
 										center=true);
 								sphere( minkowski_rounded );
 							}
-						} 
+						}
+						if (boxed_light) {
+							yhalf=(boxed_w-boxed_thickness*2-minkowski_rounded*2)/2;
+							for (y=[-yhalf:boxed_light*3:+yhalf])
+							translate([0,y,-(s_t)/2+frame_thickness])
+								cube([1000,boxed_light,s_t],center=true);
+							xhalf=(boxed_l-boxed_thickness*2-minkowski_rounded*2)/2;
+							for (x=[-xhalf:boxed_light*3:+xhalf])
+							translate([x,0,-(s_t)/2+frame_thickness])
+								cube([boxed_light,1000,s_t],center=true);
+						}
 						translate([-500,-500,boxed_h/2])
 							cube([1000,1000,1000]);
 					}

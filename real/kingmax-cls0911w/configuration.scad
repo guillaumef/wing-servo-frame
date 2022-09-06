@@ -98,9 +98,12 @@ with_boxed		= 0;	/* 0: no box
 				 */
 boxed_w			= 50;
 boxed_l			= 50;
-boxed_h			= 20;
-boxed_thickness		= 2.0;
-
+boxed_h			= 18;
+boxed_thickness		= 0.8;
+boxed_light		= 2;    /* 0: solid frame
+				 * >0: make vertical notches in the box: lighter and release
+				 *     tension during the print. Value is the width of the notch
+				 */
 
 /* MISC */
 
