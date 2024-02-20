@@ -1,0 +1,8 @@
+ECHO: "******************"
+ECHO: "Bearing shaft/arm screw:"
+ECHO: "**** 'arm_screw_dia' matches bearing internal diameter:"
+ECHO: "**** >> the screw is the bearing shaft"
+ECHO: "**** screw length (threaded part) should be approximately between 11.85 and 14.3 mm"
+ECHO: "**** >> Tuning the length is possible with the 'frame_arm_clearance' parameter"
+ECHO: "**** screw thread metric is M2"
+ECHO: "******************"

@@ -171,6 +171,9 @@ Servo list:
 - KST X06N HV
 - KST HS08B HV
 - KST HS08A HV
+- KST A08N
+- KST A08
+- KST A08H
 - Emax ES3352
 - Emax ES08MDII
 - TowerPro MG90D 15g

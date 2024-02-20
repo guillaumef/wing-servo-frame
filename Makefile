@@ -157,5 +157,9 @@ cleanstl:
 cleangif:
 	@rm -f stls/*/*.gif
 
+cleangit:
+	@git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch stls/*/*' --prune-empty --tag-name-filter cat -- --all
+	@git push origin --force --all
+
 clean:	cleanstl cleangif
 
