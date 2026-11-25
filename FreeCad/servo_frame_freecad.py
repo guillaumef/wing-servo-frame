@@ -4,7 +4,7 @@ WING SERVO FRAME - version FreeCAD (macro Python)
 
 Conversion de servo-frame.scad (Guillaume F. - licence GPL) vers FreeCAD.
 Les paramètres de configuration.scad sont dans une feuille de calcul « Config ».
-La base de servos et de roulements est dans les feuilles « Servos » et « Bearings ».
+La base de servos, de roulements et d'inserts Ruthex est dans les feuilles « Servos », « Bearings » et « Ruthex ».
 
 Utilisation :
   1. FreeCAD > Macro > Macros... > (ou ouvrir ce fichier) > Exécuter.
@@ -92,6 +92,32 @@ BEARINGS = {
     7: ("MR95ZZ", [5, 9, 3]),
 }
 
+# Inserts filetés Ruthex (source : tableau « Größe » du fabricant)
+#   id: ("nom", [d1, d2, d3, L, W])   - id 0 réservé = pas d'insert
+#   d1 = Ø extérieur de l'insert, d2 = Ø de perçage, d3 = Ø d3 du plan, L = longueur, W = valeur W du tableau
+RUTHEX = {
+    0: ("Aucun (pas d'insert)", [0, 0, 0, 0, 0]),
+    1: ("M2 / #2-56", [3.6, 3.1, 3.2, 4.0, 1.3]),
+    2: ("#4-40 Short", [4.6, 3.9, 4.0, 3.56, 1.6]),
+    3: ("M2.5", [4.6, 3.9, 4.0, 5.7, 1.6]),
+    4: ("M3 Short", [4.6, 3.9, 4.0, 4.0, 1.6]),
+    5: ("M3x5x4 Voron", [5.0, 4.25, 4.4, 4.0, 1.3]),
+    6: ("M3 / #4-40", [4.6, 3.9, 4.0, 5.7, 1.6]),
+    7: ("#6-32 Short", [5.4, 4.7, 4.8, 3.8, 1.8]),
+    8: ("#6-32", [5.4, 4.7, 4.8, 7.1, 1.8]),
+    9: ("M4 Short", [6.3, 5.5, 5.6, 4.0, 2.1]),
+    10: ("#8-32 Short", [6.3, 5.5, 5.6, 4.7, 2.1]),
+    11: ("M4 / #8-32", [6.3, 5.5, 5.6, 8.1, 2.1]),
+    12: ("M5 Short", [7.1, 6.3, 6.4, 5.8, 2.6]),
+    13: ("M5 / #10-24 / #10-32 UNF", [7.1, 6.3, 6.4, 9.5, 2.6]),
+    14: ("1/4in-20 Short", [8.7, 7.9, 8.0, 6.4, 3.3]),
+    15: ("M6 / 1/4in-20", [8.7, 7.9, 8.0, 12.7, 3.3]),
+    16: ("M6 Short", [8.7, 7.9, 8.0, 6.8, 3.3]),
+    17: ("M8 / 5/16in-18", [10.1, 9.5, 9.6, 12.7, 4.5]),
+    18: ("3/8in-16", [12.6, 11.8, 11.9, 12.7, 6.0]),
+    19: ("M10", [12.6, 11.8, 12.0, 12.7, 6.0]),
+}
+
 SERVO_COLUMNS = ["LEG_FORMAT", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M"]
 
 # ----------------------------------------------------------------------------
@@ -108,6 +134,8 @@ CONFIG = [
     ("ear_support_screw", 1, "LEG_FORMAT=1 : bloc en L vissé. 0=aucun blocage z (sangle) 1=encoche centrale 2=vis dans l'oreille 3=1+2"),
     ("ear_support_screwhead", 3, "Si ear_support_screw=2 : diamètre de la tête de vis"),
     ("z_axis_servo_cover", 1, "Si ear_support_screw=0 : fabrique un couvercle de servo (0/1)"),
+    ("ruthex_id", 0, "Insert Ruthex à presser dans les oreilles : id de la feuille Ruthex. 0 = pas d'insert"),
+    ("ruthex_extra_depth", 0.0, "Matière en plus de la longueur L de l'insert, sous l'insert (mm). Le cadre est épaissi sous les oreilles pour atteindre L + cette valeur"),
 
     ("Palonnier (servo arm)",),
     ("arm_thickness", 0.5, "Épaisseur ajoutée du palonnier entre la tête de vis et l'engrenage (mm)"),
@@ -218,12 +246,29 @@ def create_bearings_sheet(doc):
     return sh
 
 
+def create_ruthex_sheet(doc):
+    sh = doc.addObject("Spreadsheet::Sheet", "Ruthex")
+    sh.Label = "Ruthex"
+    for c, h in enumerate(["Id", "Nom", "d1 (ext.)", "d2 (perçage)", "d3", "L (longueur)", "W"]):
+        sh.set("%s1" % _col(c), _text(h))
+    sh.setStyle("A1:G1", "bold", "add")
+    r = 2
+    for i, (name, vals) in sorted(RUTHEX.items()):
+        sh.set("A%d" % r, str(i))
+        sh.set("B%d" % r, _text(name))
+        for c, v in enumerate(vals):
+            sh.set("%s%d" % (_col(2 + c), r), str(v))
+        r += 1
+    sh.setColumnWidth("B", 220)
+    return sh
+
+
 def _col(c):
     return "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[c]
 
 
-def read_inputs(config_sheet, servos_sheet, bearings_sheet):
-    """Lit les feuilles et renvoie (cfg, servo, bearing)."""
+def read_inputs(config_sheet, servos_sheet, bearings_sheet, ruthex_sheet=None):
+    """Lit les feuilles et renvoie (cfg, servo, bearing, ruthex). ruthex = None si ruthex_id = 0."""
     cfg = {}
     for item in CONFIG:
         if len(item) == 3:
@@ -252,7 +297,22 @@ def read_inputs(config_sheet, servos_sheet, bearings_sheet):
             break
     if bearing is None:
         raise ValueError("Roulement introuvable (id %d) dans la feuille Bearings" % bid)
-    return cfg, servo, bearing
+
+    ruthex = None
+    rid = int(cfg.get("ruthex_id", 0) or 0)
+    if rid != 0:
+        if ruthex_sheet is None:
+            raise ValueError("Feuille Ruthex absente : relancez la macro pour la créer")
+        for r in range(2, 100):
+            b = sget(ruthex_sheet, "A%d" % r)
+            if b is None:
+                break
+            if int(b) == rid:
+                ruthex = [sget(ruthex_sheet, "%s%d" % (_col(2 + c), r), 0) for c in range(5)]
+                break
+        if ruthex is None:
+            raise ValueError("Ruthex introuvable (id %d) dans la feuille Ruthex" % rid)
+    return cfg, servo, bearing, ruthex
 
 
 # ----------------------------------------------------------------------------
@@ -404,7 +464,7 @@ def _warn(t):
 # ----------------------------------------------------------------------------
 # Géométrie : traduction module par module de servo-frame.scad
 # ----------------------------------------------------------------------------
-def make_parts(cfg, servo, bearing, which=PART_NAMES):
+def make_parts(cfg, servo, bearing, which=PART_NAMES, ruthex=None):
     """Construit les pièces demandées. Renvoie {nom: Part.Shape ou None}."""
 
     # --- configuration.scad -------------------------------------------------
@@ -425,6 +485,9 @@ def make_parts(cfg, servo, bearing, which=PART_NAMES):
     boxed_thickness = cfg["boxed_thickness"]
     boxed_light = cfg["boxed_light"]
     minkowski_rounded = cfg["minkowski_rounded"]
+
+    ruthex_id = int(round(cfg.get("ruthex_id", 0) or 0))
+    ruthex_extra_depth = cfg.get("ruthex_extra_depth", 0) or 0
 
     # --- Processing (variables internes) ---------------------------------------
     legformat = int(servo[0])
@@ -551,6 +614,87 @@ def make_parts(cfg, servo, bearing, which=PART_NAMES):
             d = D(plate, servo_cover_hole_mask())
             return T(d, 0, -s_h / 2.0 - frame_extra_width - s_ear_w * 3 - 10, -s_t / 2.0)
         return None
+
+    # ------------------------------------------------------- trous Ruthex
+    def ruthex_active(quiet=True):
+        """Ruthex actif ? Pas d'insert (id 0), servo sans oreilles, ou format 1 avec bloc en L : non."""
+        if not ruthex_id or ruthex is None:
+            return False
+        if legformat == 0:
+            if not quiet:
+                _warn("ruthex_id=%d ignoré : ce servo n'a pas d'oreilles (LEG_FORMAT 0)" % ruthex_id)
+            return False
+        if legformat == 1 and _ear_support_screw:
+            if not quiet:
+                _warn("ruthex_id=%d ignoré : en LEG_FORMAT 1, l'espace sous l'oreille est occupé par le "
+                      "bloc en L (ear_support_screw>0). Mettez ear_support_screw=0 pour utiliser un Ruthex." % ruthex_id)
+            return False
+        return True
+
+    def ruthex_pads():
+        """Épaissit le cadre sous chaque oreille pour que l'insert (longueur L) tienne en entier.
+        Matière disponible sous le siège de l'oreille :
+          - LEG_FORMAT 2 et 3 : (s_t - s_ear_t)/2 vers -Z ; on ajoute un bloc sous le cadre si L est plus grand
+          - LEG_FORMAT 1      : presque rien vers -Y ; on ajoute un bloc de longueur L sous l'oreille"""
+        if not ruthex_active():
+            return None
+        Lins = ruthex[3] + ruthex_extra_depth        # profondeur de matière voulue
+        m = ruthex[2] + 0.2 + 2.4                    # largeur mini autour du trou (paroi 1.2 mm)
+        xlo = s_w / 2.0                              # côté corps du servo
+        xhi = max(s_w / 2.0 + s_ear_w + frame_extra_width / 2.0, s_w / 2.0 + s_ear_w / 2.0 + m / 2.0)
+        pads = []
+        if legformat == 1:
+            y_top = s_h_ear - s_h / 2.0              # siège de l'oreille (face vers -Y)
+            for sx in (-1, 1):
+                pads.append(T(box(xhi - xlo, Lins, s_t), sx * (xlo + xhi) / 2.0, y_top - Lins / 2.0, 0))
+            _msg("Ruthex : bloc de %.2f mm sous chaque oreille (axe Y)" % Lins)
+        else:
+            avail = (s_t - s_ear_t) / 2.0            # matière actuelle sous le siège de l'oreille
+            need = Lins - avail
+            if need < 0.1:
+                _msg("Ruthex : épaisseur suffisante (%.2f mm disponibles pour %.2f mm)" % (avail, Lins))
+                return None
+            z_top = -s_t / 2.0 + 0.5                 # recouvrement avec le cadre existant
+            z_bot = -s_t / 2.0 - need
+            hz = z_top - z_bot
+            ey = s_h_ear - s_h / 2.0 + s_ear_h / 2.0
+            sy = max(s_ear_h + 2, m)
+            for sx in (-1, 1):
+                pads.append(T(box(xhi - xlo, sy, hz), sx * (xlo + xhi) / 2.0, ey, (z_top + z_bot) / 2.0))
+            if legformat == 3:                       # oreille arrière
+                pads.append(T(box(max(s_ear_h_third + 2, m), max(s_ear_w + 2, m), hz),
+                              0, -s_h / 2.0 - s_ear_w / 2.0, (z_top + z_bot) / 2.0))
+            _msg("Ruthex : cadre épaissi de %.2f mm sous les oreilles (L=%.2f, disponible=%.2f)" % (need, Lins, avail))
+        return U(pads)
+
+    def ruthex_holes():
+        """Trous traversants Ø (d3 + 0,2) au centre de chaque oreille, pour presser un insert Ruthex.
+        L'axe suit celui de la vis d'oreille du servo :
+          - LEG_FORMAT 1 (oreilles à plat dans le plan XZ) : axe Y
+          - LEG_FORMAT 2 et 3 (oreilles minces en Z)        : axe Z
+        et, en format 3, un trou supplémentaire dans l'oreille arrière."""
+        if not ruthex_active(quiet=False):
+            return None
+        r = (ruthex[2] + 0.2) / 2.0   # d3 + 0.2 mm de jeu
+        L = 100.0
+        holes = []
+        if legformat == 1:
+            y_top = s_h_ear - s_h / 2.0                       # face inférieure de l'oreille
+            y_hi = y_top + s_ear_t + s_t / 2.0 + 1            # au-dessus du support qui enserre l'oreille
+            y_lo = y_top - L
+            for sx in (-1, 1):
+                x = sx * (s_w / 2.0 + s_ear_w / 2.0)
+                holes.append(T(R(cyl(r, y_hi - y_lo), 90, 0, 0), x, (y_hi + y_lo) / 2.0, 0))
+        else:
+            z_hi = s_ear_t / 2.0 + 1
+            zc = z_hi - L / 2.0
+            ey = s_h_ear - s_h / 2.0 + s_ear_h / 2.0
+            for sx in (-1, 1):
+                holes.append(T(cyl(r, L), sx * (s_w / 2.0 + s_ear_w / 2.0), ey, zc))
+            if legformat == 3:   # oreille arrière
+                holes.append(T(cyl(r, L), 0, -s_h / 2.0 - s_ear_w / 2.0, zc))
+        _msg("Ruthex %d : trous traversants Ø%.2f mm (d3 + 0.2), %d trou(s)" % (ruthex_id, 2 * r, len(holes)))
+        return U(holes)
 
     # ---------------------------------------------------- ear support screw
     def servo_ear_support_screw_solid():
@@ -717,7 +861,8 @@ def make_parts(cfg, servo, bearing, which=PART_NAMES):
     def frame_w_ear_solid():
         return U(T(frame_solid(), 0, 0, -s_t / 2.0),  # regulate y to servo side
                  servo_ear_solid(0, 1),
-                 servo_gear_solid(1))
+                 servo_gear_solid(1),
+                 ruthex_pads())
 
     def servo_back_support_special():
         if legformat < 3 and s_ear_h_third:
@@ -728,7 +873,7 @@ def make_parts(cfg, servo, bearing, which=PART_NAMES):
         return None
 
     def servo_frame():
-        fr = D(frame_w_ear_solid(), servo_solid_mask(), servo_cover_hole_mask())
+        fr = D(frame_w_ear_solid(), servo_solid_mask(), servo_cover_hole_mask(), ruthex_holes())
         return U(fr, servo_back_support_special())
 
     # ------------------------------------------------- bearing shaft & lock
@@ -818,7 +963,7 @@ class ServoPartProxy:
         if "PartName" not in obj.PropertiesList:
             obj.addProperty("App::PropertyString", "PartName", "ServoFrame", "Pièce générée")
             obj.addProperty("App::PropertyLinkList", "Sheets", "ServoFrame",
-                            "Feuilles Config, Servos, Bearings")
+                            "Feuilles Config, Servos, Bearings, Ruthex")
         obj.PartName = part
         obj.Sheets = sheets
         obj.setEditorMode("PartName", 1)
@@ -826,8 +971,9 @@ class ServoPartProxy:
 
     def execute(self, obj):
         by_name = {s.Name: s for s in obj.Sheets}
-        cfg, servo, bearing = read_inputs(by_name["Config"], by_name["Servos"], by_name["Bearings"])
-        shapes = make_parts(cfg, servo, bearing, (obj.PartName,))
+        cfg, servo, bearing, ruthex = read_inputs(by_name["Config"], by_name["Servos"],
+                                                  by_name["Bearings"], by_name.get("Ruthex"))
+        shapes = make_parts(cfg, servo, bearing, (obj.PartName,), ruthex)
         obj.Shape = _wrap_shape(shapes[obj.PartName])
 
     def __getstate__(self):
@@ -845,9 +991,10 @@ def build(doc=None):
     cfg = doc.getObject("Config") or create_config_sheet(doc)
     servos = doc.getObject("Servos") or create_servos_sheet(doc)
     bearings = doc.getObject("Bearings") or create_bearings_sheet(doc)
+    ruthex = doc.getObject("Ruthex") or create_ruthex_sheet(doc)
     doc.recompute()  # évalue les feuilles avant les pièces
 
-    sheets = [cfg, servos, bearings]
+    sheets = [cfg, servos, bearings, ruthex]
     for name in PART_NAMES:
         obj = doc.getObject(name)
         if obj is None:
@@ -857,6 +1004,8 @@ def build(doc=None):
                 obj.ViewObject.Proxy = 0
         elif not isinstance(getattr(obj, "Proxy", None), ServoPartProxy):
             ServoPartProxy(obj, name, sheets)  # macro relancée sur un document rouvert
+        else:
+            obj.Sheets = sheets
         obj.touch()
     doc.recompute()
 
